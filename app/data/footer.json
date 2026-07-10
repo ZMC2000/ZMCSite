@@ -1,0 +1,64 @@
+{
+  "logo": {
+    "src": "/logo/zmclogo.png",
+    "alt": "Zarif Medical Center",
+    "width": 240,
+    "height": 80
+  },
+  "contact": {
+    "address": "Zarif, Al Malla",
+    "phone": "+961 01 736088",
+    "email": "zarifmedicalcenter@live.com"
+  },
+  "linksTitle": "Quick Links",
+  "links": [
+    {
+      "name": "About Us",
+      "href": "/about"
+    },
+    {
+      "name": "Contact Us",
+      "href": "/contact"
+    },
+    {
+      "name": "Our Staff",
+      "href": "/staff"
+    },
+    {
+      "name": "Our Services",
+      "href": "/services"
+    }
+  ],
+  "map": {
+    "title": "Map Location",
+    "src": "https://www.google.com/maps?q=Zarif%20Medical%20Center%20Beirut&output=embed"
+  },
+  "socials": [
+    {
+      "name": "Facebook",
+      "href": "#",
+      "icon": "facebook"
+    },
+    {
+      "name": "Instagram",
+      "href": "#",
+      "icon": "instagram"
+    },
+    {
+      "name": "YouTube",
+      "href": "#",
+      "icon": "youtube"
+    },
+    {
+      "name": "LinkedIn",
+      "href": "#",
+      "icon": "linkedin"
+    }
+  ],
+  "copyright": "Zarif Medical Center",
+  "designer": {
+    "label": "Designed By",
+    "name": "ZMC",
+    "href": "#"
+  }
+}

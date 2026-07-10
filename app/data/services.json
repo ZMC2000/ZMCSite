@@ -1,0 +1,91 @@
+{
+  "eyebrow": "What We Offer",
+  "title": "We Provide Various Medical Directions",
+  "subtitle": "Explore our main healthcare services, from family medicine and diagnostics to specialized medical care.",
+  "services": [
+    {
+      "name": "General Medicine",
+      "description": "Primary consultations, checkups, follow-ups, and everyday healthcare support.",
+      "icon": "stethoscope",
+      "image": "/services/cat1.png",
+      "href": "/services"
+    },
+    {
+      "name": "ENT",
+      "description": "Ear, nose, and throat consultations for adults and children.",
+      "icon": "ear",
+      "image": "/services/cat2.png",
+      "href": "/services"
+    },
+    {
+      "name": "Dermatology",
+      "description": "Skin, hair, and nail consultations with professional medical guidance.",
+      "icon": "hand",
+      "image": "/services/cat4.png",
+      "href": "/services"
+    },
+    {
+      "name": "Cardiology",
+      "description": "Heart health consultations, monitoring, and cardiovascular care.",
+      "icon": "heartPulse",
+      "image": "/services/cat3.png",
+      "href": "/services"
+    },
+    {
+      "name": "Gynecology",
+      "description": "Women’s health services, preventive care, and specialized consultations.",
+      "icon": "venus",
+      "image": "/services/cat5.png",
+      "href": "/services"
+    },
+    {
+      "name": "Orthopedy",
+      "description": "Bone, joint, muscle, and mobility care with specialist follow-up.",
+      "icon": "bone",
+      "image": "/services/cat6.png",
+      "href": "/services"
+    },
+    {
+      "name": "Endocrinology",
+      "description": "Hormone, diabetes, thyroid, and metabolic health consultations.",
+      "icon": "activity",
+      "image": "/services/cat7.png",
+      "href": "/services"
+    },
+    {
+      "name": "Urology",
+      "description": "Urinary and male reproductive health consultations and follow-up care.",
+      "icon": "mars",
+      "image": "/services/cat8.png",
+      "href": "/services"
+    },
+    {
+      "name": "Pediatry",
+      "description": "Gentle medical care for children, including growth follow-ups and vaccinations.",
+      "icon": "baby",
+      "image": "/services/cat9.png",
+      "href": "/services"
+    },
+    {
+      "name": "Ophthalmology",
+      "description": "Eye health consultations, vision checks, and ophthalmic medical guidance.",
+      "icon": "eye",
+      "image": "/services/cat10.png",
+      "href": "/services"
+    },
+    {
+      "name": "Psychotherapy",
+      "description": "Supportive mental health care, counseling, and emotional wellbeing services.",
+      "icon": "brain",
+      "image": "/services/cat11.png",
+      "href": "/services"
+    },
+    {
+      "name": "Nutrition",
+      "description": "Nutrition consultations, diet guidance, and healthy lifestyle support.",
+      "icon": "utensils",
+      "image": "/services/cat12.png",
+      "href": "/services"
+    }
+  ]
+}

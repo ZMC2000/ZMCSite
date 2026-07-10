@@ -1,0 +1,57 @@
+{
+  "hero": {
+    "eyebrow": "About us",
+    "title": "Let’s Dive Into the Story of",
+    "subtitle": "Zarif Medical Center",
+    "image": {
+      "src": "/about-header.png",
+      "alt": "Doctor examining a patient"
+    }
+  },
+  "intro": {
+    "eyebrow": "About Us",
+    "title": "Zarif Medical Center",
+    "description": "Zarif Medical Center is a primary healthcare provider approved by the Lebanese Ministry of Public Health, located in Beirut, Lebanon. The Center offers a wide range of medical services covering comprehensive health services, general medicine, basic medical specialties and treatments, diagnostic and preventive health services, and minor surgical procedures. The center is known for its modern medical equipment and experienced medical staff, providing quality healthcare to its patients. The facility aims to deliver comprehensive medical care, focusing on patient wellbeing and satisfaction.",
+    "video": {
+      "title": "ZMC Corporate 2023 English",
+      "thumbnail": "/youtube.png",
+      "url": "https://www.youtube.com/watch?v=JN9Y9_9EWz4&source_ve_path=MjE0Mjgz&embeds_referring_euri=https%3A%2F%2Fzarifmc.com%2F"
+    }
+  },
+  "history": {
+    "eyebrow": "Our Story",
+    "title": "History of Zarif Medical Center",
+    "paragraphsTop": [
+      "The center was established in 1954 by a group of Beiruti families well known for their generosity and love for helping the needy.",
+      "It was a small, old building that provided medical consultations to the needy residents of the area and beyond. When the demand for its services increased and it could no longer accommodate all patients, the association decided to purchase property No. 152 on Medhat Basha Street in Msaitbeh, converting it into a charitable clinic. It was equipped with the best medical facilities and staffed with a select team of specialist doctors and nurses."
+    ],
+    "images": [
+      {
+        "src": "/history/11.png",
+        "alt": "Historic medical service"
+      },
+      {
+        "src": "/history/12.png",
+        "alt": "Medical consultation"
+      },
+      {
+        "src": "/history/13.png",
+        "alt": "Doctor and patient"
+      },
+      {
+        "src": "/history/14.png",
+        "alt": "Clinic room"
+      }
+    ],
+    "paragraphsBottom": [
+      "After a period of time, the association was compelled to demolish it and erect a new building in its place, relying on the generosity and goodwill of benefactors. The temporary clinic was moved back to its old location near the Zaidaniyah Mosque, where it continued to serve patients and provide medications.",
+      "In 1976, after the association had completed the structure of the new seven story building, the tragic events in Lebanon began, forcing a halt in the construction work.",
+      "Despite the continued distressing events in Lebanon, the association resumed its work.",
+      "The construction was completed during the tenure of Prime Minister Dr. Salim Al Hoss, who generously supported the association’s project with a contribution of 250,000 Lebanese pounds.",
+      "We also acknowledge the benevolent hands that supported our project and contributed to its development, represented by the Kingdom of Saudi Arabia, which was the primary driving force behind its execution, providing assistance to the association from time to time, as well as other benefactors, contributors, and donors.",
+      "The building was fully refurbished in 2019, providing newer facilities and offering patients high standards of services.",
+      "The association invites every citizen interested in learning about its work and activities to honor us with a visit to the new clinic to see this for themselves.",
+      "Finally, we say thank you to everyone for their assistance, and thank you to those who have given and continue to give."
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "eyebrow": "Supportive Services",
+  "title": "Care Beyond the Clinic Room",
+  "description": "Our services include Laboratory and X Ray diagnostics, Nutrition guidance, Physiotherapy support, and Vaccinations for children. These services help patients receive accurate results, recover safely, and maintain better long term health.",
+  "image": {
+    "src": "/services/xray1.png",
+    "alt": "Zarif Medical Center supportive healthcare services"
+  },
+  "button": {
+    "text": "Learn More",
+    "href": "/services"
+  },
+  "items": ["Laboratory", "X-Ray imaging", "PCR", "Children vaccinations"]
+}

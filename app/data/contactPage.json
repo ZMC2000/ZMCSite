@@ -1,0 +1,83 @@
+{
+  "hero": {
+    "eyebrow": "Contact Us",
+    "title": "We Are Here to Help",
+    "subtitle": "Reach Zarif Medical Center for appointments, inquiries, clinic information, and patient assistance.",
+    "image": {
+      "src": "/about-header.png",
+      "alt": "Zarif Medical Center contact"
+    }
+  },
+  "intro": {
+    "eyebrow": "Get in Touch",
+    "title": "Contact Zarif Medical Center",
+    "description": "For appointments, clinic information, laboratory, X-Ray, physiotherapy, or general inquiries, contact our team using the details below or send us a message."
+  },
+  "contactCards": [
+    {
+      "title": "Main Phone",
+      "value": "+961 1 736088",
+      "description": "Call us for appointments and general assistance.",
+      "href": "tel:+9611736088",
+      "icon": "phone"
+    },
+    {
+      "title": "Additional Phone",
+      "value": "+961 1 737006",
+      "description": "Alternative phone number for inquiries.",
+      "href": "tel:+9611737006",
+      "icon": "phone"
+    },
+    {
+      "title": "Additional Phone",
+      "value": "+961 1 736089",
+      "description": "Alternative phone number for inquiries.",
+      "href": "tel:+9611736089",
+      "icon": "phone"
+    },
+    {
+      "title": "Email Address",
+      "value": "zarifmedicalcenter@live.com",
+      "description": "Send us your questions by email.",
+      "href": "mailto:zarifmedicalcenter@live.com",
+      "icon": "mail"
+    }
+  ],
+  "extensions": [
+    {
+      "label": "Appointments for Clinics",
+      "extension": "8016"
+    },
+    {
+      "label": "X-Ray",
+      "extension": "8024"
+    },
+    {
+      "label": "Laboratory",
+      "extension": "8011"
+    },
+    {
+      "label": "Physiotherapy",
+      "extension": "8031"
+    },
+    {
+      "label": "Information",
+      "extension": "8017"
+    }
+  ],
+  "location": {
+    "title": "Visit Our Center",
+    "address": "Zarif, Al Malla, Beirut, Lebanon",
+    "description": "Zarif Medical Center is located in Beirut and serves patients with medical consultations, diagnostic services, and healthcare support.",
+    "mapHref": "https://www.google.com/maps/search/?api=1&query=Zarif%20Medical%20Center%20Beirut"
+  },
+  "form": {
+    "eyebrow": "Send a Message",
+    "title": "Write to Us",
+    "description": "Fill in your name, email, and message. Our team will review your inquiry and contact you when possible.",
+    "nameLabel": "Full Name",
+    "emailLabel": "Email Address",
+    "messageLabel": "Message",
+    "buttonText": "Send Message"
+  }
+}

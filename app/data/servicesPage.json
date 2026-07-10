@@ -1,0 +1,90 @@
+{
+  "hero": {
+    "title": "Clinics and Services",
+    "subtitle": "We offer a variety of services in our clinics",
+    "image": {
+      "src": "services/services-banner.jpg",
+      "alt": "Mother holding a baby at a medical center"
+    }
+  },
+  "floors": [
+    {
+      "title": "First Floor",
+      "description": "The first floor of Zarif Medical Center is a hub of specialized medical care, housing clinics dedicated to a variety of disciplines including gynecology, dermatology, general medicine, and gastroenterology, among others. Patients will find a well organized waiting room designed for comfort and convenience, as well as a dedicated area for vital sign checks to ensure prompt and accurate assessments before consultations. Additionally, the center's pharmacy is conveniently located on this floor, offering easy access to prescribed medications.",
+      "mainImage": {
+        "src": "services/first/12.png",
+        "alt": "Doctor consultation on the first floor"
+      },
+      "gallery": [
+        {
+          "src": "services/first/11.png",
+          "alt": "Medical consultation"
+        },
+        {
+          "src": "services/first/14.png",
+          "alt": "Clinic reception"
+        },
+        {
+          "src": "services/first/13.png",
+          "alt": "Nurse checking patient"
+        },
+        {
+          "src": "services/first/15.png",
+          "alt": "Pharmacy and medicine support"
+        }
+      ]
+    },
+    {
+      "title": "Second, Third, and Fourth Floor",
+      "description": "The second floor of Zarif Medical Center is dedicated to specialized care, featuring the ENT department, as well as the pediatric and dentistry departments where vaccinations are also offered. Moving up to the third floor, patients will find the nutritionist and psychology departments, offering services tailored to both physical and mental wellbeing. The fourth floor is home to the physiotherapy department, cardiology, and ophthalmology clinics, providing comprehensive care for musculoskeletal, heart, and eye health needs.",
+      "mainImage": {
+        "src": "services/first/110.png",
+        "alt": "Specialized dental and pediatric care"
+      },
+      "gallery": [
+        {
+          "src": "services/first/16.png",
+          "alt": "Cardiology service"
+        },
+        {
+          "src": "services/first/19.png",
+          "alt": "Physiotherapy service"
+        },
+        {
+          "src": "services/first/17.png",
+          "alt": "ENT consultation"
+        },
+        {
+          "src": "services/first/18.png",
+          "alt": "Medical department"
+        }
+      ]
+    },
+    {
+      "title": "Sixth Floor",
+      "description": "The sixth floor of Zarif Medical Center is equipped with advanced diagnostic facilities, featuring a comprehensive laboratory that offers a full range of blood tests, urine tests, and other lab related diagnostics. In addition to the laboratory services, the floor also houses the X ray department, where patients can undergo various types of imaging, including full body X rays, panoramic X rays for dental assessments, breast imaging, echocardiograms, and osteoporosis screenings. The specialized equipment and skilled staff on this floor ensure precise and reliable diagnostic results.",
+      "mainImage": {
+        "src": "services/first/113.png",
+        "alt": "Laboratory diagnostic equipment"
+      },
+      "gallery": [
+        {
+          "src": "services/first/111.png",
+          "alt": "X ray diagnostics"
+        },
+        {
+          "src": "services/first/112.png",
+          "alt": "Ultrasound imaging"
+        },
+        {
+          "src": "services/first/114.png",
+          "alt": "Diagnostic consultation"
+        },
+        {
+          "src": "services/first/115.png",
+          "alt": "Laboratory testing"
+        }
+      ]
+    }
+  ]
+}

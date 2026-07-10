@@ -1,0 +1,73 @@
+{
+  "hero": {
+    "eyebrow": "Our Staff",
+    "title": "Meet Our Medical Support Team",
+    "subtitle": "Our nurses, physiotherapists, lab team, and pharmacy staff work together to support patients with care, professionalism, and compassion.",
+    "image": {
+      "src": "/schedule.png",
+      "alt": "Zarif Medical Center staff"
+    }
+  },
+  "intro": {
+    "eyebrow": "Medical Support",
+    "title": "Zarif Medical Center Team is Ready to Assist",
+    "description": "Browse our support team by role and learn more about the people who help deliver daily patient care at Zarif Medical Center."
+  },
+  "staff": [
+    {
+      "name": "Elham Baghdadi",
+      "role": "Registered Nurse",
+      "category": "Nursing",
+      "image": "https://randomuser.me/api/portraits/women/45.jpg"
+    },
+    {
+      "name": "Nourhan Awwasa",
+      "role": "Registered Nurse",
+      "category": "Nursing",
+      "image": "https://randomuser.me/api/portraits/women/46.jpg"
+    },
+    {
+      "name": "Raneen Wattar",
+      "role": "Registered Nurse",
+      "category": "Nursing",
+      "image": "https://randomuser.me/api/portraits/women/47.jpg"
+    },
+    {
+      "name": "Rayhan Al Rifai",
+      "role": "Physiotherapist",
+      "category": "Physiotherapy",
+      "image": "https://randomuser.me/api/portraits/women/48.jpg"
+    },
+    {
+      "name": "Hayat Al Turk",
+      "role": "Physiotherapist",
+      "category": "Physiotherapy",
+      "image": "https://randomuser.me/api/portraits/women/49.jpg"
+    },
+    {
+      "name": "Sayde Doughan",
+      "role": "Lab Member",
+      "category": "Laboratory",
+      "image": "https://randomuser.me/api/portraits/women/50.jpg"
+    },
+    {
+      "name": "Naimat Attallah",
+      "role": "Pharmacist",
+      "category": "Pharmacy",
+      "image": "https://randomuser.me/api/portraits/women/51.jpg"
+    },
+    {
+      "name": "Sanaa Badr",
+      "role": "Pharmacist",
+      "category": "Pharmacy",
+      "image": "https://randomuser.me/api/portraits/women/52.jpg"
+    }
+  ],
+  "cta": {
+    "title": "Need assistance from our team?",
+    "description": "Contact Zarif Medical Center for support, appointments, and general patient assistance.",
+    "phone": "+961 1 736088",
+    "buttonText": "Call Now",
+    "buttonHref": "tel:+9611736088"
+  }
+}

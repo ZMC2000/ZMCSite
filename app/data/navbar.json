@@ -1,0 +1,50 @@
+{
+  "logo": {
+    "src": "/logo/logo.png",
+    "alt": "Zarif Medical Center",
+    "width": 240,
+    "height": 80
+  },
+  "emergency": {
+    "label": "Landline",
+    "phone": "+961 1 736 088/9/7"
+  },
+  "location": {
+    "line1": "Medhat Basha, Msaitbeh",
+    "line2": "Beirut, Lebanon"
+  },
+  "hours": {
+    "line1": "Monday - Friday - 7:30 - 3:00",
+    "line2": "Saturday - 7:30 - 2:30"
+  },
+  "links": [
+    {
+      "name": "Home",
+      "href": "/"
+    },
+    {
+      "name": "About",
+      "href": "/about"
+    },
+    {
+      "name": "Departments & Services",
+      "href": "/services"
+    },
+    {
+      "name": "Doctors & Schedules",
+      "href": "/schedule"
+    },
+    {
+      "name": "Out Staff",
+      "href": "/staff"
+    },
+    {
+      "name": "Contact Us",
+      "href": "/contact"
+    }
+  ],
+  "appointment": {
+    "name": "Book an Appointment",
+    "href": "/appointment"
+  }
+}

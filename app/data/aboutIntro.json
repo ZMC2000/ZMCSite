@@ -1,0 +1,21 @@
+{
+  "eyebrow": "A Word From Us",
+  "title": "Zarif Medical Center",
+  "paragraphs": [
+    "At Zarif Medical Center, we are committed to providing promotive, preventive, and curative high quality healthcare services to everyone seeking health care in our immediate area and beyond.",
+    "We continue our mission with compassion, dignity, and accessible care, offering essential medical services at symbolic nominal prices and, at times, free of charge."
+  ],
+  "image": {
+    "src": "/about-intro/aboutus.png",
+    "alt": "Doctor consulting a patient at Zarif Medical Center"
+  },
+  "signature": {
+    "name": "Dr. Kassem Kassak",
+    "role": "Zarif Medical Center Board Member",
+    "image": "/about-intro/km.png"
+  },
+  "button": {
+    "text": "Learn More",
+    "href": "/about"
+  }
+}

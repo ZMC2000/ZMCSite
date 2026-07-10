@@ -1,0 +1,12 @@
+{
+  "title": "We want you healthy because we care",
+  "subtitle": "Compassionate medical services, diagnostics, vaccinations, and community care for every generation.",
+  "button": {
+    "text": "Get to know us",
+    "href": "/appointment"
+  },
+  "image": {
+    "src": "/main-header.png",
+    "alt": "Zarif Medical Center healthcare header"
+  }
+}
