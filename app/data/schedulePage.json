@@ -415,7 +415,7 @@
       "doctors": [
         {
           "name": "Dr. Mahmoud Tamim",
-          "image": "https://randomuser.me/api/portraits/men/38.jpg",
+          "image": "/staff/pfp.jpg",
           "times": [
             "Every day"
           ],
