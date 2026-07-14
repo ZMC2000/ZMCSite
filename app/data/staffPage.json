@@ -15,52 +15,46 @@
   },
   "staff": [
     {
-      "name": "Elham Baghdadi",
-      "role": "Registered Nurse",
-      "category": "Nursing",
-      "image": "https://randomuser.me/api/portraits/women/45.jpg"
-    },
-    {
       "name": "Nourhan Awwasa",
       "role": "Registered Nurse",
       "category": "Nursing",
-      "image": "https://randomuser.me/api/portraits/women/46.jpg"
+      "image": "/staff/iim_5709.jpg"
     },
     {
       "name": "Raneen Wattar",
       "role": "Registered Nurse",
       "category": "Nursing",
-      "image": "https://randomuser.me/api/portraits/women/47.jpg"
+      "image": "/staff/iim_5717.jpg"
     },
     {
       "name": "Rayhan Al Rifai",
       "role": "Physiotherapist",
       "category": "Physiotherapy",
-      "image": "https://randomuser.me/api/portraits/women/48.jpg"
+      "image": "/staff/iim_4495.jpg"
     },
     {
       "name": "Hayat Al Turk",
       "role": "Physiotherapist",
       "category": "Physiotherapy",
-      "image": "https://randomuser.me/api/portraits/women/49.jpg"
+      "image": "/staff/iim_4493.jpg"
     },
     {
       "name": "Sayde Doughan",
       "role": "Lab Member",
       "category": "Laboratory",
-      "image": "https://randomuser.me/api/portraits/women/50.jpg"
+      "image": "/staff/iim_5737.jpg"
     },
     {
-      "name": "Naimat Attallah",
+      "name": "Nisreen Qlailat ",
       "role": "Pharmacist",
       "category": "Pharmacy",
-      "image": "https://randomuser.me/api/portraits/women/51.jpg"
+      "image": "/staff/pfp.jpg"
     },
     {
       "name": "Sanaa Badr",
       "role": "Pharmacist",
       "category": "Pharmacy",
-      "image": "https://randomuser.me/api/portraits/women/52.jpg"
+      "image": "/staff/iim_5720.png"
     }
   ],
   "cta": {

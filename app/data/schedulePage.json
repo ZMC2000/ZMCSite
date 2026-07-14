@@ -17,19 +17,25 @@
         {
           "name": "Dr. Larisa Al Awar",
           "image": "/doctors/iim_4502.jpg",
-          "times": ["Every day except Thursday 10:00 AM to 2:00 PM"],
+          "times": [
+            "Every day except Thursday 10:00 AM to 2:00 PM"
+          ],
           "note": ""
         },
         {
           "name": "Dr. Walid Abou Merhi",
-          "image": "https://randomuser.me/api/portraits/men/31.jpg",
-          "times": ["Wednesday and Thursday 9:00 AM to 11:00 AM"],
+          "image": "/staff/pfp.jpg",
+          "times": [
+            "Wednesday and Thursday 9:00 AM to 11:00 AM"
+          ],
           "note": ""
         },
         {
           "name": "Dr. Mohammad Imad Asfari",
-          "image": "/doctors/iim_4473.jpg",
-          "times": ["Monday and Thursday 8:00 AM to 10:00 AM"],
+          "image": "/doctors/iim_4467.jpg",
+          "times": [
+            "Monday and Thursday 8:00 AM to 10:00 AM"
+          ],
           "note": "Also available under Orthopedic"
         }
       ]
@@ -41,14 +47,18 @@
       "doctors": [
         {
           "name": "Sara Zaatari",
-          "image": "https://randomuser.me/api/portraits/women/21.jpg",
-          "times": ["Friday 11:00 AM to 12:00 PM"],
+          "image": "/doctors/iim_5657.jpg",
+          "times": [
+            "Friday 11:00 AM to 12:00 PM"
+          ],
           "note": ""
         },
         {
           "name": "Darine Fanous",
-          "image": "https://randomuser.me/api/portraits/women/24.jpg",
-          "times": ["Wednesday 11:00 AM to 12:00 PM"],
+          "image": "/doctors/iim_5788.jpg",
+          "times": [
+            "Wednesday 11:00 AM to 12:00 PM"
+          ],
           "note": ""
         }
       ]
@@ -60,14 +70,18 @@
       "doctors": [
         {
           "name": "Dr. Elissar Farhat",
-          "image": "https://randomuser.me/api/portraits/women/52.jpg",
-          "times": ["Tuesday and Thursday 8:00 AM to 10:00 AM"],
+          "image": "/doctors/iim_4487.jpg",
+          "times": [
+            "Tuesday and Thursday 8:00 AM to 10:00 AM"
+          ],
           "note": "Appointment needed"
         },
         {
           "name": "Dr. Suhail Al Zaeni",
-          "image": "https://randomuser.me/api/portraits/men/83.jpg",
-          "times": ["Every day 11:00 AM to 12:30 PM"],
+          "image": "/doctors/iim_4629.jpg",
+          "times": [
+            "Every day 11:00 AM to 12:30 PM"
+          ],
           "note": ""
         }
       ]
@@ -79,7 +93,7 @@
       "doctors": [
         {
           "name": "Dr. Choughik Kalositian",
-          "image": "https://randomuser.me/api/portraits/women/65.jpg",
+          "image": "/doctors/IIM_5793.jpeg",
           "times": [
             "Wednesday 11:00 AM to 12:00 PM",
             "Saturday 10:00 AM to 11:00 AM"
@@ -88,8 +102,10 @@
         },
         {
           "name": "Dr. Marwa Itani",
-          "image": "https://randomuser.me/api/portraits/women/32.jpg",
-          "times": ["Monday and Thursday 10:00 AM to 12:00 PM"],
+          "image": "/staff/pfp.jpg",
+          "times": [
+            "Monday and Thursday 10:00 AM to 12:00 PM"
+          ],
           "note": ""
         }
       ]
@@ -101,20 +117,26 @@
       "doctors": [
         {
           "name": "Dr. Ahmad Smayli",
-          "image": "https://randomuser.me/api/portraits/men/41.jpg",
-          "times": ["Wednesday and Saturday 8:30 AM to 9:30 AM"],
+          "image": "/staff/pfp.jpg",
+          "times": [
+            "Wednesday and Saturday 8:30 AM to 9:30 AM"
+          ],
           "note": ""
         },
         {
           "name": "Dr. Mohammad Serhal",
-          "image": "https://randomuser.me/api/portraits/men/32.jpg",
-          "times": ["Monday and Thursday 11:00 AM to 12:00 PM"],
+          "image": "/staff/pfp.jpg",
+          "times": [
+            "Monday and Thursday 11:00 AM to 12:00 PM"
+          ],
           "note": ""
         },
         {
           "name": "Dr. Nazir Yehya",
-          "image": "https://randomuser.me/api/portraits/men/54.jpg",
-          "times": ["Tuesday and Friday 10:00 AM to 11:00 AM"],
+          "image": "/doctors/iim_4503.jpg",
+          "times": [
+            "Tuesday and Friday 10:00 AM to 11:00 AM"
+          ],
           "note": ""
         }
       ]
@@ -126,7 +148,7 @@
       "doctors": [
         {
           "name": "Dr. Tasneem Al Omar",
-          "image": "https://randomuser.me/api/portraits/women/33.jpg",
+          "image": "/staff/pfp.jpg",
           "times": [
             "Tuesday 12:00 PM to 2:00 PM",
             "Thursday 8:00 AM to 10:00 AM"
@@ -142,13 +164,15 @@
       "doctors": [
         {
           "name": "Dr. Hussein Al Sabban",
-          "image": "https://randomuser.me/api/portraits/men/22.jpg",
-          "times": ["Wednesday 12:00 PM to 1:00 PM"],
+          "image": "/doctors/iim_5801.jpg",
+          "times": [
+            "Wednesday 12:00 PM to 1:00 PM"
+          ],
           "note": ""
         },
         {
           "name": "Dr. Mohammad Khayyat",
-          "image": "https://randomuser.me/api/portraits/men/48.jpg",
+          "image": "/doctors/iim_4641.jpg",
           "times": [
             "Tuesday 11:00 AM to 12:00 PM",
             "Friday and Saturday 9:30 AM to 10:30 AM"
@@ -157,7 +181,7 @@
         },
         {
           "name": "Dr. Hussein Ismail",
-          "image": "https://randomuser.me/api/portraits/men/57.jpg",
+          "image": "/doctors/iim_4473.jpg",
           "times": [
             "Monday 8:30 AM to 10:00 AM",
             "Thursday 9:00 AM to 10:00 AM"
@@ -173,14 +197,19 @@
       "doctors": [
         {
           "name": "Dr. Mohammad Imad Asfari",
-          "image": "/doctors/iim_4473.jpg",
-          "times": ["Monday and Thursday 8:00 AM to 10:00 AM"],
+          "image": "/doctors/iim_4467.jpg",
+          "times": [
+            "Monday and Thursday 8:00 AM to 10:00 AM"
+          ],
           "note": "Also available under General Medicine"
         },
         {
           "name": "Dr. Ramzi Chukair",
-          "image": "https://randomuser.me/api/portraits/men/61.jpg",
-          "times": ["Tuesday 1:00 PM to 2:00 PM", "Friday 12:00 PM to 1:00 PM"],
+          "image": "/doctors/iim_5690.jpg",
+          "times": [
+            "Tuesday 1:00 PM to 2:00 PM",
+            "Friday 12:00 PM to 1:00 PM"
+          ],
           "note": ""
         }
       ]
@@ -192,8 +221,10 @@
       "doctors": [
         {
           "name": "Dr. Youssef Ghouson",
-          "image": "https://randomuser.me/api/portraits/men/67.jpg",
-          "times": ["Monday and Friday 10:00 AM to 11:00 AM"],
+          "image": "/doctors/iim_5649.jpg",
+          "times": [
+            "Monday and Friday 10:00 AM to 11:00 AM"
+          ],
           "note": ""
         }
       ]
@@ -205,20 +236,26 @@
       "doctors": [
         {
           "name": "Dr. Zahed Shehab",
-          "image": "https://randomuser.me/api/portraits/men/24.jpg",
-          "times": ["Tuesday 1:00 PM to 3:00 PM"],
+          "image": "/doctors/iim_5696.jpg",
+          "times": [
+            "Tuesday 1:00 PM to 3:00 PM"
+          ],
           "note": ""
         },
         {
           "name": "Dr. Choukri Chawaf",
-          "image": "https://randomuser.me/api/portraits/men/34.jpg",
-          "times": ["Wednesday and Friday 9:00 AM to 12:00 PM"],
+          "image": "/staff/pfp.jpg",
+          "times": [
+            "Wednesday and Friday 9:00 AM to 12:00 PM"
+          ],
           "note": ""
         },
         {
           "name": "Dr. Ahmad Al Areesi",
-          "image": "https://randomuser.me/api/portraits/men/35.jpg",
-          "times": ["Saturday 8:00 AM"],
+          "image": "/staff/pfp.jpg",
+          "times": [
+            "Saturday 8:00 AM"
+          ],
           "note": ""
         }
       ]
@@ -230,7 +267,7 @@
       "doctors": [
         {
           "name": "Dr. Akram Sinno",
-          "image": "https://randomuser.me/api/portraits/men/72.jpg",
+          "image": "/doctors/iim_5747.jpg",
           "times": [
             "Wednesday 9:30 AM to 10:30 AM",
             "Saturday 12:00 PM to 1:00 PM"
@@ -239,8 +276,10 @@
         },
         {
           "name": "Dr. Sani Baydoun",
-          "image": "https://randomuser.me/api/portraits/men/75.jpg",
-          "times": ["Monday and Thursday 8:30 AM to 10:00 AM"],
+          "image": "/doctors/iim_4463.jpg",
+          "times": [
+            "Monday and Thursday 8:30 AM to 10:00 AM"
+          ],
           "note": ""
         }
       ]
@@ -252,7 +291,7 @@
       "doctors": [
         {
           "name": "Dr. Mohammad Omar Chukair",
-          "image": "https://randomuser.me/api/portraits/men/91.jpg",
+          "image": "/doctors/IMG_5458.png",
           "times": [
             "Wednesday and Friday 8:00 AM to 10:00 AM",
             "Saturday 11:00 AM to 2:00 PM"
@@ -267,9 +306,11 @@
       "description": "Chest, breathing, and allergy consultations with specialist follow-up.",
       "doctors": [
         {
-          "name": "Dr. Mahmoud Chabou",
-          "image": "https://randomuser.me/api/portraits/men/36.jpg",
-          "times": ["Tuesday 1:00 PM to 3:00 PM"],
+          "name": "Dr. Mahmoud Chebbo",
+          "image": "/staff/pfp.jpg",
+          "times": [
+            "Tuesday 1:00 PM to 3:00 PM"
+          ],
           "note": "Appointment needed"
         }
       ]
@@ -281,8 +322,10 @@
       "doctors": [
         {
           "name": "Dr. Wassila Baddou",
-          "image": "https://randomuser.me/api/portraits/women/34.jpg",
-          "times": ["Appointment needed 8:30 AM to 11:00 AM"],
+          "image": "/staff/pfp.jpg",
+          "times": [
+            "Appointment needed 8:30 AM to 11:00 AM"
+          ],
           "note": "Appointment needed"
         }
       ]
@@ -294,20 +337,26 @@
       "doctors": [
         {
           "name": "Lorence Al Hafi",
-          "image": "https://randomuser.me/api/portraits/women/82.jpg",
-          "times": ["Monday, Wednesday, and Friday 10:00 AM to 1:00 PM"],
+          "image": "/doctors/iim_5650.jpg",
+          "times": [
+            "Monday, Wednesday, and Friday 10:00 AM to 1:00 PM"
+          ],
           "note": ""
         },
         {
           "name": "Rawan Abdel Mawla",
-          "image": "https://randomuser.me/api/portraits/women/35.jpg",
-          "times": ["Wednesday, Friday, and Saturday"],
+          "image": "/staff/pfp.jpg",
+          "times": [
+            "Wednesday, Friday, and Saturday"
+          ],
           "note": "Appointment needed"
         },
         {
           "name": "Omar Chehabeddine",
-          "image": "https://randomuser.me/api/portraits/men/37.jpg",
-          "times": ["Saturday"],
+          "image": "/staff/pfp.jpg",
+          "times": [
+            "Saturday"
+          ],
           "note": "Appointment needed"
         }
       ]
@@ -319,32 +368,42 @@
       "doctors": [
         {
           "name": "Dr. Tala Mneimneh",
-          "image": "https://randomuser.me/api/portraits/women/90.jpg",
-          "times": ["Thursday 9:00 AM to 1:00 PM"],
+          "image": "/doctors/iim_4660.jpg",
+          "times": [
+            "Thursday 9:00 AM to 1:00 PM"
+          ],
           "note": "Appointment needed"
         },
         {
           "name": "Dr. Farouq Al Sayyed",
-          "image": "https://randomuser.me/api/portraits/men/12.jpg",
-          "times": ["Friday 9:00 AM to 11:00 AM"],
+          "image": "/doctors/iim_5639.jpg",
+          "times": [
+            "Friday 9:00 AM to 11:00 AM"
+          ],
           "note": "Appointment needed"
         },
         {
           "name": "Dr. Shireen Sherre",
-          "image": "https://randomuser.me/api/portraits/women/14.jpg",
-          "times": ["Wednesday 11:00 AM to 2:00 PM"],
+          "image": "/doctors/iim_5782.jpg",
+          "times": [
+            "Wednesday 11:00 AM to 2:00 PM"
+          ],
           "note": "Appointment needed"
         },
         {
           "name": "Dr. Mohammad Dabbagh",
-          "image": "https://randomuser.me/api/portraits/men/18.jpg",
-          "times": ["Saturday 9:00 AM to 2:00 PM"],
+          "image": "/doctors/iim_6179.jpg",
+          "times": [
+            "Saturday 9:00 AM to 2:00 PM"
+          ],
           "note": "Appointment needed"
         },
         {
           "name": "Dr. Khaled Al Sanea",
-          "image": "https://randomuser.me/api/portraits/men/19.jpg",
-          "times": ["Monday 10:00 AM to 11:00 AM"],
+          "image": "/doctors/iim_5670.jpg",
+          "times": [
+            "Monday 10:00 AM to 11:00 AM"
+          ],
           "note": "Appointment needed"
         }
       ]
@@ -357,7 +416,9 @@
         {
           "name": "Dr. Mahmoud Tamim",
           "image": "https://randomuser.me/api/portraits/men/38.jpg",
-          "times": ["Every day"],
+          "times": [
+            "Every day"
+          ],
           "note": "Appointment needed"
         }
       ]

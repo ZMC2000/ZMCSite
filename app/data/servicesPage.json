@@ -17,11 +17,11 @@
       },
       "gallery": [
         {
-          "src": "services/first/11.png",
+          "src": "/2026/firstfloor2.png",
           "alt": "Medical consultation"
         },
         {
-          "src": "services/first/14.png",
+          "src": "/2026/firstfloor1.png",
           "alt": "Clinic reception"
         },
         {
@@ -29,7 +29,7 @@
           "alt": "Nurse checking patient"
         },
         {
-          "src": "services/first/15.png",
+          "src": "/2026/firstfloor3.png",
           "alt": "Pharmacy and medicine support"
         }
       ]
