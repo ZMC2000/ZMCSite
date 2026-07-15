@@ -1,0 +1,79 @@
+{
+  "shared": {
+    "since1954": { "en": "Since 1954", "ar": "منذ عام 1954" },
+    "learnMore": { "en": "Learn More", "ar": "اعرف المزيد" },
+    "contactUs": { "en": "Contact Us", "ar": "اتصل بنا" }
+  },
+  "home": {
+    "compassionateCare": { "en": "Compassionate Care", "ar": "رعاية إنسانية" },
+    "servingFamilies": { "en": "Serving families since 1954", "ar": "في خدمة العائلات منذ عام 1954" },
+    "accessibleSupport": { "en": "Accessible Support", "ar": "دعم متاح للجميع" },
+    "diagnosticsSupport": { "en": "Diagnostics, prevention, and recovery care", "ar": "خدمات التشخيص والوقاية والتعافي" }
+  },
+  "about": {
+    "watchStory": { "en": "Watch our story", "ar": "شاهد قصتنا" },
+    "mophApproved": { "en": "MOPH Approved", "ar": "معتمد من وزارة الصحة العامة" },
+    "communityHealthcare": { "en": "Community Healthcare", "ar": "رعاية صحية مجتمعية" },
+    "established": { "en": "Established", "ar": "تأسس عام" },
+    "legacyDescription": { "en": "A community healthcare legacy built by Beiruti families to support those in need.", "ar": "إرث من الرعاية الصحية المجتمعية أسسته عائلات بيروتية لمساندة المحتاجين." },
+    "years": { "en": "Years", "ar": "عاماً" },
+    "beirut": { "en": "Beirut", "ar": "بيروت" },
+    "community": { "en": "Community", "ar": "المجتمع" },
+    "givingLegacy": { "en": "A Legacy of Giving", "ar": "إرث من العطاء" },
+    "givingSubtitle": { "en": "Built by generosity, continued through care", "ar": "بُني بالكرم ويستمر بالرعاية" },
+    "visitCenter": { "en": "Visit the Center", "ar": "زر المركز" }
+  },
+  "services": {
+    "departments": { "en": "Our Departments", "ar": "أقسامنا" },
+    "clinics": { "en": "Clinics and Services", "ar": "العيادات والخدمات" },
+    "floorCare": { "en": "Care Across Every Floor", "ar": "رعاية متكاملة في كل طابق" },
+    "overview": { "en": "Discover how Zarif Medical Center organizes clinical care, diagnostics, prevention, and supportive services across dedicated floors.", "ar": "اكتشف كيف ينظّم مركز الظريف الطبي خدمات العيادات والتشخيص والوقاية والرعاية المساندة ضمن طوابق مخصصة." },
+    "specializedClinics": { "en": "Specialized Clinics", "ar": "عيادات متخصصة" },
+    "specializedDescription": { "en": "Multiple medical specialties covering daily consultations and focused care.", "ar": "اختصاصات طبية متعددة تغطي الاستشارات اليومية والرعاية المتخصصة." },
+    "diagnostics": { "en": "Diagnostics", "ar": "التشخيص" },
+    "diagnosticsDescription": { "en": "Laboratory and imaging services supporting accurate treatment decisions.", "ar": "خدمات مختبر وتصوير تساعد على اتخاذ قرارات علاجية دقيقة." },
+    "organizedFloors": { "en": "Organized Floors", "ar": "طوابق منظّمة" },
+    "organizedDescription": { "en": "Services grouped by floor to help patients access care more easily.", "ar": "خدمات موزعة حسب الطوابق لتسهيل وصول المرضى إلى الرعاية." },
+    "floor": { "en": "Floor", "ar": "الطابق" },
+    "clinicFloor": { "en": "Clinic Floor", "ar": "طابق العيادات" },
+    "patientCare": { "en": "Patient Care", "ar": "رعاية المرضى" },
+    "specializedServices": { "en": "Specialized Services", "ar": "خدمات متخصصة" },
+    "helpTitle": { "en": "Need help choosing the right service?", "ar": "هل تحتاج إلى مساعدة لاختيار الخدمة المناسبة؟" },
+    "helpDescription": { "en": "Contact Zarif Medical Center and our team will guide you to the right department or appointment.", "ar": "تواصل مع مركز الظريف الطبي وسيرشدك فريقنا إلى القسم أو الموعد المناسب." }
+  },
+  "schedule": {
+    "filter": { "en": "Filter Schedule", "ar": "تصفية جدول المواعيد" },
+    "chooseCategory": { "en": "Choose a Medical Category", "ar": "اختر اختصاصاً طبياً" },
+    "filterDescription": { "en": "Select a category to show only its doctors and available visit times, or choose All to view the complete schedule.", "ar": "اختر اختصاصاً لعرض أطبائه ومواعيد الزيارة المتاحة، أو اختر الكل لعرض الجدول كاملاً." },
+    "allCategories": { "en": "All Categories", "ar": "جميع الاختصاصات" },
+    "categories": { "en": "Categories", "ar": "اختصاصات" },
+    "medicalCategory": { "en": "Medical Category", "ar": "الاختصاص الطبي" },
+    "specialist": { "en": "Specialist", "ar": "اختصاصي" },
+    "specialists": { "en": "Specialists", "ar": "اختصاصيين" },
+    "confirmation": { "en": "Appointment Confirmation", "ar": "تأكيد الموعد" }
+  },
+  "staff": {
+    "filter": { "en": "Filter Staff", "ar": "تصفية الفريق" },
+    "all": { "en": "All Staff", "ar": "جميع أفراد الفريق" },
+    "member": { "en": "Member", "ar": "عضو" },
+    "members": { "en": "Members", "ar": "أعضاء" },
+    "assistance": { "en": "Staff Assistance", "ar": "مساعدة الفريق" }
+  },
+  "contact": {
+    "extensions": { "en": "Extensions", "ar": "التحويلات" },
+    "phoneExtensions": { "en": "Phone Numbers and Extensions", "ar": "أرقام الهواتف والتحويلات" },
+    "extensionHelp": { "en": "Use extension 8016 for clinic appointments.", "ar": "استخدم التحويلة 8016 لمواعيد العيادات." },
+    "location": { "en": "Location", "ar": "الموقع" },
+    "openMap": { "en": "Open Map", "ar": "افتح الخريطة" },
+    "prepared": { "en": "Message prepared", "ar": "تم تجهيز الرسالة" },
+    "preparedDescription": { "en": "This demo form is ready visually. Connect it to your email service or backend later.", "ar": "هذا النموذج التجريبي جاهز من الناحية المرئية، ويمكن ربطه لاحقاً بخدمة البريد الإلكتروني أو النظام الخلفي." },
+    "namePlaceholder": { "en": "Enter your full name", "ar": "أدخل اسمك الكامل" },
+    "emailPlaceholder": { "en": "Enter your email address", "ar": "أدخل بريدك الإلكتروني" },
+    "messagePlaceholder": { "en": "Write your message here", "ar": "اكتب رسالتك هنا" },
+    "urgentTitle": { "en": "For urgent appointment confirmation", "ar": "لتأكيد موعد عاجل" },
+    "urgentDescription": { "en": "Please call the center directly instead of waiting for a form response.", "ar": "يرجى الاتصال بالمركز مباشرةً بدلاً من انتظار الرد على النموذج." }
+  },
+  "footer": {
+    "rights": { "en": ", All Rights Reserved.", "ar": "، جميع الحقوق محفوظة." }
+  }
+}

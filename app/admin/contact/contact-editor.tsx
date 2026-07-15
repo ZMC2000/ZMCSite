@@ -17,6 +17,13 @@ import {
   Trash2,
   X,
 } from "lucide-react";
+import DraggableAdminItem from "../components/draggable-admin-item";
+import {
+  moveItem,
+  randomDigits,
+  randomLabel,
+  randomPhone,
+} from "../utils/admin-placeholders";
 
 type PublicImage = {
   src: string;
@@ -168,15 +175,16 @@ export default function ContactEditor({
   }
 
   function addContactCard() {
+    const phone = randomPhone();
     setData({
       ...data,
       contactCards: [
         ...data.contactCards,
         {
-          title: "New Contact",
-          value: "Contact value",
-          description: "Contact description",
-          href: "",
+          title: randomLabel("New Contact"),
+          value: phone,
+          description: randomLabel("Contact description"),
+          href: `tel:${phone.replaceAll(" ", "")}`,
           icon: "phone",
         },
       ],
@@ -189,6 +197,13 @@ export default function ContactEditor({
       contactCards: data.contactCards.filter(
         (_, itemIndex) => itemIndex !== index,
       ),
+    });
+  }
+
+  function moveContactCard(fromIndex: number, toIndex: number) {
+    setData({
+      ...data,
+      contactCards: moveItem(data.contactCards, fromIndex, toIndex),
     });
   }
 
@@ -216,8 +231,8 @@ export default function ContactEditor({
       extensions: [
         ...data.extensions,
         {
-          label: "New Extension",
-          extension: "0000",
+          label: randomLabel("New Extension"),
+          extension: randomDigits(4),
         },
       ],
     });
@@ -227,6 +242,13 @@ export default function ContactEditor({
     setData({
       ...data,
       extensions: data.extensions.filter((_, itemIndex) => itemIndex !== index),
+    });
+  }
+
+  function moveExtension(fromIndex: number, toIndex: number) {
+    setData({
+      ...data,
+      extensions: moveItem(data.extensions, fromIndex, toIndex),
     });
   }
 
@@ -464,90 +486,93 @@ export default function ContactEditor({
 
               <div className="grid gap-6 md:grid-cols-2">
                 {data.contactCards.map((card, index) => (
-                  <div
+                  <DraggableAdminItem
                     key={`${card.title}-${index}`}
-                    className="rounded-4xl border border-gray-100 bg-gray-50 p-5 sm:p-6"
+                    index={index}
+                    onMove={moveContactCard}
                   >
-                    <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-main-100 text-white">
-                          {card.icon === "mail" ? (
-                            <Mail size={22} strokeWidth={2.5} />
-                          ) : card.icon === "mapPin" ? (
-                            <MapPin size={22} strokeWidth={2.5} />
-                          ) : (
-                            <Phone size={22} strokeWidth={2.5} />
-                          )}
+                    <div className="rounded-4xl border border-gray-100 bg-gray-50 p-5 sm:p-6">
+                      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-main-100 text-white">
+                            {card.icon === "mail" ? (
+                              <Mail size={22} strokeWidth={2.5} />
+                            ) : card.icon === "mapPin" ? (
+                              <MapPin size={22} strokeWidth={2.5} />
+                            ) : (
+                              <Phone size={22} strokeWidth={2.5} />
+                            )}
+                          </div>
+
+                          <div>
+                            <h3 className="text-lg font-extrabold text-gray-950">
+                              {card.title}
+                            </h3>
+                            <p className="mt-1 text-sm font-medium text-gray-500">
+                              {card.value}
+                            </p>
+                          </div>
                         </div>
 
-                        <div>
-                          <h3 className="text-lg font-extrabold text-gray-950">
-                            {card.title}
-                          </h3>
-                          <p className="mt-1 text-sm font-medium text-gray-500">
-                            {card.value}
-                          </p>
-                        </div>
+                        <button
+                          type="button"
+                          onClick={() => removeContactCard(index)}
+                          className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-full bg-red-50 px-4 py-2 text-xs font-bold uppercase tracking-wide text-red-600"
+                        >
+                          <Trash2 size={15} />
+                          Remove
+                        </button>
                       </div>
 
-                      <button
-                        type="button"
-                        onClick={() => removeContactCard(index)}
-                        className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-full bg-red-50 px-4 py-2 text-xs font-bold uppercase tracking-wide text-red-600"
-                      >
-                        <Trash2 size={15} />
-                        Remove
-                      </button>
-                    </div>
-
-                    <div className="grid gap-6 lg:grid-cols-2">
-                      <Input
-                        label="Title"
-                        value={card.title}
-                        onChange={(value) =>
-                          updateContactCard(index, "title", value)
-                        }
-                      />
-
-                      <Input
-                        label="Value"
-                        value={card.value}
-                        onChange={(value) =>
-                          updateContactCard(index, "value", value)
-                        }
-                      />
-
-                      <Input
-                        label="Href"
-                        value={card.href}
-                        onChange={(value) =>
-                          updateContactCard(index, "href", value)
-                        }
-                      />
-
-                      <Select
-                        label="Icon"
-                        value={card.icon}
-                        onChange={(value) =>
-                          updateContactCard(index, "icon", value)
-                        }
-                        options={iconOptions.map((icon) => ({
-                          label: icon,
-                          value: icon,
-                        }))}
-                      />
-
-                      <div className="lg:col-span-2">
-                        <Textarea
-                          label="Description"
-                          value={card.description}
+                      <div className="grid gap-6 lg:grid-cols-2">
+                        <Input
+                          label="Title"
+                          value={card.title}
                           onChange={(value) =>
-                            updateContactCard(index, "description", value)
+                            updateContactCard(index, "title", value)
                           }
                         />
+
+                        <Input
+                          label="Value"
+                          value={card.value}
+                          onChange={(value) =>
+                            updateContactCard(index, "value", value)
+                          }
+                        />
+
+                        <Input
+                          label="Href"
+                          value={card.href}
+                          onChange={(value) =>
+                            updateContactCard(index, "href", value)
+                          }
+                        />
+
+                        <Select
+                          label="Icon"
+                          value={card.icon}
+                          onChange={(value) =>
+                            updateContactCard(index, "icon", value)
+                          }
+                          options={iconOptions.map((icon) => ({
+                            label: icon,
+                            value: icon,
+                          }))}
+                        />
+
+                        <div className="lg:col-span-2">
+                          <Textarea
+                            label="Description"
+                            value={card.description}
+                            onChange={(value) =>
+                              updateContactCard(index, "description", value)
+                            }
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </DraggableAdminItem>
                 ))}
               </div>
             </section>
@@ -575,48 +600,51 @@ export default function ContactEditor({
 
               <div className="grid gap-6 md:grid-cols-2">
                 {data.extensions.map((extension, index) => (
-                  <div
+                  <DraggableAdminItem
                     key={`${extension.label}-${index}`}
-                    className="rounded-4xl border border-gray-100 bg-gray-50 p-5 sm:p-6"
+                    index={index}
+                    onMove={moveExtension}
                   >
-                    <div className="mb-6 flex items-start justify-between gap-4">
-                      <div>
-                        <h3 className="text-lg font-extrabold text-gray-950">
-                          {extension.label}
-                        </h3>
-                        <p className="mt-1 text-sm font-bold text-main-100">
-                          Ext. {extension.extension}
-                        </p>
+                    <div className="rounded-4xl border border-gray-100 bg-gray-50 p-5 sm:p-6">
+                      <div className="mb-6 flex items-start justify-between gap-4">
+                        <div>
+                          <h3 className="text-lg font-extrabold text-gray-950">
+                            {extension.label}
+                          </h3>
+                          <p className="mt-1 text-sm font-bold text-main-100">
+                            Ext. {extension.extension}
+                          </p>
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => removeExtension(index)}
+                          className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-full bg-red-50 px-4 py-2 text-xs font-bold uppercase tracking-wide text-red-600"
+                        >
+                          <Trash2 size={15} />
+                          Remove
+                        </button>
                       </div>
 
-                      <button
-                        type="button"
-                        onClick={() => removeExtension(index)}
-                        className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-full bg-red-50 px-4 py-2 text-xs font-bold uppercase tracking-wide text-red-600"
-                      >
-                        <Trash2 size={15} />
-                        Remove
-                      </button>
-                    </div>
+                      <div className="grid gap-6 lg:grid-cols-2">
+                        <Input
+                          label="Label"
+                          value={extension.label}
+                          onChange={(value) =>
+                            updateExtension(index, "label", value)
+                          }
+                        />
 
-                    <div className="grid gap-6 lg:grid-cols-2">
-                      <Input
-                        label="Label"
-                        value={extension.label}
-                        onChange={(value) =>
-                          updateExtension(index, "label", value)
-                        }
-                      />
-
-                      <Input
-                        label="Extension"
-                        value={extension.extension}
-                        onChange={(value) =>
-                          updateExtension(index, "extension", value)
-                        }
-                      />
+                        <Input
+                          label="Extension"
+                          value={extension.extension}
+                          onChange={(value) =>
+                            updateExtension(index, "extension", value)
+                          }
+                        />
+                      </div>
                     </div>
-                  </div>
+                  </DraggableAdminItem>
                 ))}
               </div>
             </section>

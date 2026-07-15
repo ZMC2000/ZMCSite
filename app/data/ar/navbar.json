@@ -1,0 +1,50 @@
+{
+  "logo": {
+    "src": "/logo/logo.png",
+    "alt": "مركز الظريف الطبي",
+    "width": 240,
+    "height": 80
+  },
+  "emergency": {
+    "label": "الهاتف الأرضي",
+    "phone": "+961 1 736 088/9/7"
+  },
+  "location": {
+    "line1": "مدحت باشا، المصيطبة",
+    "line2": "بيروت، لبنان"
+  },
+  "hours": {
+    "line1": "الاثنين - الجمعة، 7:30 - 3:00",
+    "line2": "السبت، 7:30 - 2:30"
+  },
+  "links": [
+    {
+      "name": "الرئيسية",
+      "href": "/"
+    },
+    {
+      "name": "من نحن",
+      "href": "/about"
+    },
+    {
+      "name": "الأقسام والخدمات",
+      "href": "/services"
+    },
+    {
+      "name": "الأطباء والمواعيد",
+      "href": "/schedule"
+    },
+    {
+      "name": "فريقنا",
+      "href": "/staff"
+    },
+    {
+      "name": "اتصل بنا",
+      "href": "/contact"
+    }
+  ],
+  "appointment": {
+    "name": "احجز موعداً",
+    "href": "/appointment"
+  }
+}

@@ -13,6 +13,8 @@ import {
   Trash2,
   X,
 } from "lucide-react";
+import DraggableAdminItem from "../components/draggable-admin-item";
+import { moveItem, randomLabel } from "../utils/admin-placeholders";
 
 type PublicImage = {
   src: string;
@@ -179,11 +181,11 @@ export default function ServicesEditor({
       floors: [
         ...data.floors,
         {
-          title: "New Floor",
-          description: "Write floor description here.",
+          title: randomLabel("New Floor"),
+          description: randomLabel("Floor description"),
           mainImage: {
             src: "",
-            alt: "Floor image",
+            alt: randomLabel("Floor image"),
           },
           gallery: [],
         },
@@ -198,6 +200,10 @@ export default function ServicesEditor({
     });
   }
 
+  function moveFloor(fromIndex: number, toIndex: number) {
+    setData({ ...data, floors: moveItem(data.floors, fromIndex, toIndex) });
+  }
+
   function addGalleryImage(floorIndex: number) {
     const nextFloors = [...data.floors];
 
@@ -207,7 +213,7 @@ export default function ServicesEditor({
         ...nextFloors[floorIndex].gallery,
         {
           src: "",
-          alt: "Gallery image",
+          alt: randomLabel("Gallery image"),
         },
       ],
     };
@@ -232,6 +238,19 @@ export default function ServicesEditor({
       ...data,
       floors: nextFloors,
     });
+  }
+
+  function moveGalleryImage(
+    floorIndex: number,
+    fromIndex: number,
+    toIndex: number,
+  ) {
+    const nextFloors = [...data.floors];
+    nextFloors[floorIndex] = {
+      ...nextFloors[floorIndex],
+      gallery: moveItem(nextFloors[floorIndex].gallery, fromIndex, toIndex),
+    };
+    setData({ ...data, floors: nextFloors });
   }
 
   function openImagePicker(target: ImageTarget) {
@@ -419,161 +438,169 @@ export default function ServicesEditor({
 
               <div className="space-y-10">
                 {data.floors.map((floor, floorIndex) => (
-                  <div
+                  <DraggableAdminItem
                     key={`${floor.title}-${floorIndex}`}
-                    className="rounded-4xl border border-gray-100 bg-gray-50 p-5 sm:p-6"
+                    index={floorIndex}
+                    onMove={moveFloor}
                   >
-                    <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                      <div>
-                        <h3 className="text-xl font-extrabold text-gray-950">
-                          Floor {floorIndex + 1}
-                        </h3>
-                        <p className="mt-2 text-sm font-medium text-gray-500">
-                          Edit title, description, main image, and gallery.
-                        </p>
-                      </div>
-
-                      <button
-                        type="button"
-                        onClick={() => removeFloor(floorIndex)}
-                        className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-full bg-red-50 px-4 py-2 text-xs font-bold uppercase tracking-wide text-red-600"
-                      >
-                        <Trash2 size={15} />
-                        Remove Floor
-                      </button>
-                    </div>
-
-                    <div className="grid gap-6 lg:grid-cols-2">
-                      <Input
-                        label="Floor Title"
-                        value={floor.title}
-                        onChange={(value) =>
-                          updateFloor(floorIndex, "title", value)
-                        }
-                      />
-
-                      <Textarea
-                        label="Floor Description"
-                        value={floor.description}
-                        onChange={(value) =>
-                          updateFloor(floorIndex, "description", value)
-                        }
-                      />
-
-                      <Input
-                        label="Main Image Alt"
-                        value={floor.mainImage.alt}
-                        onChange={(value) =>
-                          updateFloorMainImage(floorIndex, "alt", value)
-                        }
-                      />
-
-                      <div className="lg:col-span-2">
-                        <ImageSelector
-                          label="Main Image"
-                          src={floor.mainImage.src}
-                          onChoose={() =>
-                            openImagePicker({
-                              type: "floorMain",
-                              floorIndex,
-                            })
-                          }
-                        />
-                      </div>
-                    </div>
-
-                    <div className="mt-10 rounded-4xl border border-gray-100 bg-white p-5 sm:p-6">
-                      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="rounded-4xl border border-gray-100 bg-gray-50 p-5 sm:p-6">
+                      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                         <div>
-                          <h4 className="text-lg font-extrabold text-gray-950">
-                            Gallery Images
-                          </h4>
-                          <p className="mt-2 text-sm font-medium leading-6 text-gray-500">
-                            Manage the gallery images for this floor.
+                          <h3 className="text-xl font-extrabold text-gray-950">
+                            Floor {floorIndex + 1}
+                          </h3>
+                          <p className="mt-2 text-sm font-medium text-gray-500">
+                            Edit title, description, main image, and gallery.
                           </p>
                         </div>
 
                         <button
                           type="button"
-                          onClick={() => addGalleryImage(floorIndex)}
-                          className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-full bg-main-100 px-4 py-2 text-xs font-bold uppercase tracking-wide text-white"
+                          onClick={() => removeFloor(floorIndex)}
+                          className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-full bg-red-50 px-4 py-2 text-xs font-bold uppercase tracking-wide text-red-600"
                         >
-                          <Plus size={15} />
-                          Add Image
+                          <Trash2 size={15} />
+                          Remove Floor
                         </button>
                       </div>
 
-                      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                        {floor.gallery.map((image, imageIndex) => (
-                          <div
-                            key={`${image.src}-${imageIndex}`}
-                            className="rounded-3xl border border-gray-100 bg-gray-50 p-4"
+                      <div className="grid gap-6 lg:grid-cols-2">
+                        <Input
+                          label="Floor Title"
+                          value={floor.title}
+                          onChange={(value) =>
+                            updateFloor(floorIndex, "title", value)
+                          }
+                        />
+
+                        <Textarea
+                          label="Floor Description"
+                          value={floor.description}
+                          onChange={(value) =>
+                            updateFloor(floorIndex, "description", value)
+                          }
+                        />
+
+                        <Input
+                          label="Main Image Alt"
+                          value={floor.mainImage.alt}
+                          onChange={(value) =>
+                            updateFloorMainImage(floorIndex, "alt", value)
+                          }
+                        />
+
+                        <div className="lg:col-span-2">
+                          <ImageSelector
+                            label="Main Image"
+                            src={floor.mainImage.src}
+                            onChoose={() =>
+                              openImagePicker({
+                                type: "floorMain",
+                                floorIndex,
+                              })
+                            }
+                          />
+                        </div>
+                      </div>
+
+                      <div className="mt-10 rounded-4xl border border-gray-100 bg-white p-5 sm:p-6">
+                        <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                          <div>
+                            <h4 className="text-lg font-extrabold text-gray-950">
+                              Gallery Images
+                            </h4>
+                            <p className="mt-2 text-sm font-medium leading-6 text-gray-500">
+                              Manage the gallery images for this floor.
+                            </p>
+                          </div>
+
+                          <button
+                            type="button"
+                            onClick={() => addGalleryImage(floorIndex)}
+                            className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-full bg-main-100 px-4 py-2 text-xs font-bold uppercase tracking-wide text-white"
                           >
-                            <div className="flex h-44 items-center justify-center overflow-hidden rounded-2xl bg-white ring-1 ring-gray-100">
-                              {image.src ? (
-                                <img
-                                  src={displayImagePath(image.src)}
-                                  alt={image.alt || "Gallery image"}
-                                  className="max-h-full max-w-full object-contain"
-                                />
-                              ) : (
-                                <div className="flex h-full items-center justify-center text-gray-400">
-                                  <ImageIcon size={30} />
+                            <Plus size={15} />
+                            Add Image
+                          </button>
+                        </div>
+
+                        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                          {floor.gallery.map((image, imageIndex) => (
+                            <DraggableAdminItem
+                              key={`${image.src}-${imageIndex}`}
+                              index={imageIndex}
+                              onMove={(fromIndex, toIndex) =>
+                                moveGalleryImage(floorIndex, fromIndex, toIndex)
+                              }
+                            >
+                              <div className="rounded-3xl border border-gray-100 bg-gray-50 p-4">
+                                <div className="flex h-44 items-center justify-center overflow-hidden rounded-2xl bg-white ring-1 ring-gray-100">
+                                  {image.src ? (
+                                    <img
+                                      src={displayImagePath(image.src)}
+                                      alt={image.alt || "Gallery image"}
+                                      className="max-h-full max-w-full object-contain"
+                                    />
+                                  ) : (
+                                    <div className="flex h-full items-center justify-center text-gray-400">
+                                      <ImageIcon size={30} />
+                                    </div>
+                                  )}
                                 </div>
-                              )}
+
+                                <div className="mt-5 space-y-4">
+                                  <Input
+                                    label="Alt Text"
+                                    value={image.alt}
+                                    onChange={(value) =>
+                                      updateGalleryImage(
+                                        floorIndex,
+                                        imageIndex,
+                                        "alt",
+                                        value,
+                                      )
+                                    }
+                                  />
+
+                                  <button
+                                    type="button"
+                                    onClick={() =>
+                                      openImagePicker({
+                                        type: "floorGallery",
+                                        floorIndex,
+                                        imageIndex,
+                                      })
+                                    }
+                                    className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-main-100 px-4 py-3 text-xs font-bold uppercase tracking-wide text-white"
+                                  >
+                                    <ImageIcon size={15} />
+                                    Choose Image
+                                  </button>
+
+                                  <button
+                                    type="button"
+                                    onClick={() =>
+                                      removeGalleryImage(floorIndex, imageIndex)
+                                    }
+                                    className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-red-50 px-4 py-3 text-xs font-bold uppercase tracking-wide text-red-600"
+                                  >
+                                    <Trash2 size={15} />
+                                    Remove
+                                  </button>
+                                </div>
+                              </div>
+                            </DraggableAdminItem>
+                          ))}
+
+                          {floor.gallery.length === 0 ? (
+                            <div className="col-span-full rounded-3xl bg-gray-50 p-8 text-center text-sm font-bold text-gray-500 ring-1 ring-gray-100">
+                              No gallery images yet.
                             </div>
-
-                            <div className="mt-5 space-y-4">
-                              <Input
-                                label="Alt Text"
-                                value={image.alt}
-                                onChange={(value) =>
-                                  updateGalleryImage(
-                                    floorIndex,
-                                    imageIndex,
-                                    "alt",
-                                    value,
-                                  )
-                                }
-                              />
-
-                              <button
-                                type="button"
-                                onClick={() =>
-                                  openImagePicker({
-                                    type: "floorGallery",
-                                    floorIndex,
-                                    imageIndex,
-                                  })
-                                }
-                                className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-main-100 px-4 py-3 text-xs font-bold uppercase tracking-wide text-white"
-                              >
-                                <ImageIcon size={15} />
-                                Choose Image
-                              </button>
-
-                              <button
-                                type="button"
-                                onClick={() =>
-                                  removeGalleryImage(floorIndex, imageIndex)
-                                }
-                                className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-red-50 px-4 py-3 text-xs font-bold uppercase tracking-wide text-red-600"
-                              >
-                                <Trash2 size={15} />
-                                Remove
-                              </button>
-                            </div>
-                          </div>
-                        ))}
-
-                        {floor.gallery.length === 0 ? (
-                          <div className="col-span-full rounded-3xl bg-gray-50 p-8 text-center text-sm font-bold text-gray-500 ring-1 ring-gray-100">
-                            No gallery images yet.
-                          </div>
-                        ) : null}
+                          ) : null}
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </DraggableAdminItem>
                 ))}
               </div>
             </section>

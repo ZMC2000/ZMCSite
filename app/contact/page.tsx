@@ -17,6 +17,8 @@ import {
 } from "lucide-react";
 
 import contactPageData from "../data/contactPage.json";
+import arabicContactPageData from "../data/ar/contactPage.json";
+import { useLanguage, useLocalizedData } from "../i18n/language-context";
 
 const iconMap = {
   phone: Phone,
@@ -24,8 +26,9 @@ const iconMap = {
 };
 
 export default function ContactPage() {
+  const { t, isArabic } = useLanguage();
   const { hero, intro, contactCards, extensions, location, form } =
-    contactPageData;
+    useLocalizedData(contactPageData, arabicContactPageData);
 
   const [submitted, setSubmitted] = useState(false);
 
@@ -73,8 +76,6 @@ export default function ContactPage() {
 
       <section className="relative overflow-hidden bg-white py-16 sm:py-20 lg:py-24">
         <div className="absolute inset-0 bg-linear-to-br from-white via-gray-50 to-main-100/5" />
-        <div className="absolute -right-32 top-20 h-80 w-80 rounded-full bg-main-100/10 blur-3xl" />
-        <div className="absolute -left-32 bottom-20 h-80 w-80 rounded-full bg-main-100/10 blur-3xl" />
 
         <div className="relative mx-auto max-w-7xl px-5">
           <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
@@ -110,7 +111,10 @@ export default function ContactPage() {
                         {card.title}
                       </h3>
 
-                      <p className="mt-2 wrap-break-word text-sm font-bold text-main-100">
+                      <p
+                        dir={card.icon === "phone" ? "ltr" : undefined}
+                        className={`${card.icon === "phone" ? "phone-number" : ""} mt-2 wrap-break-word text-sm font-bold text-main-100`}
+                      >
                         {card.value}
                       </p>
 
@@ -124,8 +128,6 @@ export default function ContactPage() {
 
               <div className="mt-6 overflow-hidden rounded-4xl border border-gray-100 bg-white shadow-xl shadow-gray-200/60">
                 <div className="relative border-b border-gray-100 bg-gray-50 p-6">
-                  <div className="absolute -right-16 -top-16 h-44 w-44 rounded-full bg-main-100/10 blur-3xl" />
-
                   <div className="relative flex items-start gap-4">
                     <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-main-100 text-white shadow-lg shadow-main-100/20">
                       <ClipboardList size={26} strokeWidth={2.5} />
@@ -133,15 +135,15 @@ export default function ContactPage() {
 
                     <div>
                       <p className="text-xs font-bold uppercase tracking-[0.18em] text-main-100">
-                        Extensions
+                        {t("Extensions")}
                       </p>
 
                       <h3 className="mt-2 text-2xl font-extrabold text-gray-950">
-                        Phone Numbers and Extensions
+                        {t("Phone Numbers and Extensions")}
                       </h3>
 
                       <p className="mt-2 text-sm font-medium leading-6 text-gray-600">
-                        Use extension 8016 for clinic appointments.
+                        {t("Use extension 8016 for clinic appointments.")}
                       </p>
                     </div>
                   </div>
@@ -157,7 +159,10 @@ export default function ContactPage() {
                         {item.label}
                       </span>
 
-                      <span className="rounded-full bg-main-100/10 px-3 py-1 text-sm font-extrabold text-main-100">
+                      <span
+                        dir="ltr"
+                        className="phone-number rounded-full bg-main-100/10 px-3 py-1 text-sm font-extrabold text-main-100"
+                      >
                         {item.extension}
                       </span>
                     </div>
@@ -167,12 +172,10 @@ export default function ContactPage() {
 
               <div className="mt-6 overflow-hidden rounded-4xl border border-gray-100 bg-gray-950 shadow-2xl shadow-gray-300/60">
                 <div className="relative p-6 sm:p-7">
-                  <div className="absolute -right-16 -top-16 h-44 w-44 rounded-full bg-main-100/25 blur-3xl" />
-
                   <div className="relative">
                     <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-white backdrop-blur">
                       <MapPin size={15} strokeWidth={2.5} />
-                      Location
+                      {t("Location")}
                     </div>
 
                     <h3 className="text-2xl font-extrabold text-white">
@@ -192,8 +195,12 @@ export default function ContactPage() {
                       target="_blank"
                       className="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-main-100 px-5 py-3 text-sm font-bold uppercase tracking-wide text-white shadow-lg shadow-main-100/25 transition hover:bg-main-100/90"
                     >
-                      Open Map
-                      <ArrowRight size={16} strokeWidth={2.5} />
+                      {t("Open Map")}
+                      <ArrowRight
+                        size={16}
+                        strokeWidth={2.5}
+                        className={isArabic ? "rtl-flip" : ""}
+                      />
                     </Link>
                   </div>
                 </div>
@@ -222,10 +229,11 @@ export default function ContactPage() {
                     className="shrink-0"
                   />
                   <div>
-                    <p className="font-extrabold">Message prepared</p>
+                    <p className="font-extrabold">{t("Message prepared")}</p>
                     <p className="mt-1 text-sm font-medium leading-6">
-                      This demo form is ready visually. Connect it to your email
-                      service or backend later.
+                      {t(
+                        "This demo form is ready visually. Connect it to your email service or backend later.",
+                      )}
                     </p>
                   </div>
                 </div>
@@ -245,7 +253,7 @@ export default function ContactPage() {
                     name="name"
                     type="text"
                     required
-                    placeholder="Enter your full name"
+                    placeholder={t("Enter your full name")}
                     className="h-14 w-full rounded-2xl border border-gray-100 bg-gray-50 px-5 text-sm font-semibold text-gray-950 outline-none transition placeholder:text-gray-400 focus:border-main-100 focus:bg-white focus:ring-4 focus:ring-main-100/10"
                   />
                 </div>
@@ -263,7 +271,7 @@ export default function ContactPage() {
                     name="email"
                     type="email"
                     required
-                    placeholder="Enter your email address"
+                    placeholder={t("Enter your email address")}
                     className="h-14 w-full rounded-2xl border border-gray-100 bg-gray-50 px-5 text-sm font-semibold text-gray-950 outline-none transition placeholder:text-gray-400 focus:border-main-100 focus:bg-white focus:ring-4 focus:ring-main-100/10"
                   />
                 </div>
@@ -281,7 +289,7 @@ export default function ContactPage() {
                     name="message"
                     required
                     rows={7}
-                    placeholder="Write your message here"
+                    placeholder={t("Write your message here")}
                     className="w-full resize-none rounded-2xl border border-gray-100 bg-gray-50 px-5 py-4 text-sm font-semibold text-gray-950 outline-none transition placeholder:text-gray-400 focus:border-main-100 focus:bg-white focus:ring-4 focus:ring-main-100/10"
                   />
                 </div>
@@ -303,11 +311,12 @@ export default function ContactPage() {
 
                   <div>
                     <p className="text-sm font-extrabold text-gray-950">
-                      For urgent appointment confirmation
+                      {t("For urgent appointment confirmation")}
                     </p>
                     <p className="mt-1 text-sm font-medium leading-6 text-gray-600">
-                      Please call the center directly instead of waiting for a
-                      form response.
+                      {t(
+                        "Please call the center directly instead of waiting for a form response.",
+                      )}
                     </p>
                   </div>
                 </div>

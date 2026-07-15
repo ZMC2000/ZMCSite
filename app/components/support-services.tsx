@@ -1,18 +1,21 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, FlaskConical, Syringe } from "lucide-react";
 
 import supportServicesData from "../data/supportServices.json";
+import arabicSupportServicesData from "../data/ar/supportServices.json";
+import { useLanguage, useLocalizedData } from "../i18n/language-context";
 
 export default function SupportServices() {
+  const { t, isArabic } = useLanguage();
   const { eyebrow, title, description, image, button, items } =
-    supportServicesData;
+    useLocalizedData(supportServicesData, arabicSupportServicesData);
 
   return (
     <section className="relative overflow-hidden bg-white py-16 sm:py-20 lg:py-24">
       <div className="absolute inset-0 bg-linear-to-br from-white via-gray-50 to-main-100/5" />
-      <div className="absolute -right-32 top-20 h-80 w-80 rounded-full bg-main-100/10 blur-3xl" />
-      <div className="absolute -left-32 bottom-20 h-80 w-80 rounded-full bg-main-100/10 blur-3xl" />
 
       <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
         {/* Text */}
@@ -52,16 +55,17 @@ export default function SupportServices() {
               className="inline-flex items-center gap-2 rounded-full bg-main-100 px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-white shadow-lg shadow-main-100/20 transition hover:bg-main-100/90"
             >
               {button.text}
-              <ArrowRight size={17} strokeWidth={2.5} />
+              <ArrowRight
+                size={17}
+                strokeWidth={2.5}
+                className={isArabic ? "rtl-flip" : ""}
+              />
             </Link>
           </div>
         </div>
 
         {/* Image */}
         <div className="relative">
-          <div className="absolute -left-5 -top-5 hidden h-28 w-28 rounded-3xl bg-main-100/10 sm:block" />
-          <div className="absolute -bottom-5 -right-5 hidden h-32 w-32 rounded-3xl bg-main-100/15 sm:block" />
-
           <div className="relative overflow-hidden rounded-4xl bg-gray-100 shadow-2xl shadow-gray-200/70">
             <Image
               src={image.src}
@@ -81,10 +85,10 @@ export default function SupportServices() {
 
                 <div>
                   <p className="text-sm font-bold text-gray-900">
-                    Accessible Support
+                    {t("Accessible Support")}
                   </p>
                   <p className="text-xs font-medium text-gray-500">
-                    Diagnostics, prevention, and recovery care
+                    {t("Diagnostics, prevention, and recovery care")}
                   </p>
                 </div>
               </div>

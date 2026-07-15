@@ -26,6 +26,8 @@ import {
 } from "lucide-react";
 
 import schedulePageData from "../data/schedulePage.json";
+import arabicSchedulePageData from "../data/ar/schedulePage.json";
+import { useLanguage, useLocalizedData } from "../i18n/language-context";
 
 const iconMap = {
   stethoscope: Stethoscope,
@@ -44,13 +46,28 @@ const iconMap = {
 };
 
 export default function SchedulePage() {
-  const { hero, categories, cta } = schedulePageData;
+  const { t } = useLanguage();
+  const { hero, categories, cta } = useLocalizedData(
+    schedulePageData,
+    arabicSchedulePageData,
+  );
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   const filteredCategories =
     selectedCategory === "All"
       ? categories
-      : categories.filter((category) => category.name === selectedCategory);
+      : categories.filter(
+          (_, index) =>
+            schedulePageData.categories[index].name === selectedCategory,
+        );
+
+  const selectedCategoryLabel =
+    selectedCategory === "All"
+      ? ""
+      : categories.find(
+          (_, index) =>
+            schedulePageData.categories[index].name === selectedCategory,
+        )?.name;
 
   return (
     <main>
@@ -97,16 +114,17 @@ export default function SchedulePage() {
               <div>
                 <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-main-100/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-main-100">
                   <Filter size={15} strokeWidth={2.5} />
-                  Filter Schedule
+                  {t("Filter Schedule")}
                 </div>
 
                 <h2 className="text-3xl font-extrabold tracking-tight text-gray-950 sm:text-4xl">
-                  Choose a Medical Category
+                  {t("Choose a Medical Category")}
                 </h2>
 
                 <p className="mt-3 max-w-2xl text-sm font-medium leading-7 text-gray-600 sm:text-base">
-                  Select a category to show only its doctors and available visit
-                  times, or choose All to view the complete schedule.
+                  {t(
+                    "Select a category to show only its doctors and available visit times, or choose All to view the complete schedule.",
+                  )}
                 </p>
               </div>
 
@@ -116,10 +134,13 @@ export default function SchedulePage() {
                   onChange={(event) => setSelectedCategory(event.target.value)}
                   className="h-15 w-full appearance-none rounded-full border border-gray-100 bg-gray-50 px-6 pr-14 text-base font-bold text-gray-950 shadow-sm outline-none transition focus:border-main-100 focus:bg-white focus:ring-4 focus:ring-main-100/10"
                 >
-                  <option value="All">All Categories</option>
+                  <option value="All">{t("All Categories")}</option>
 
-                  {categories.map((category) => (
-                    <option key={category.name} value={category.name}>
+                  {categories.map((category, index) => (
+                    <option
+                      key={category.name}
+                      value={schedulePageData.categories[index].name}
+                    >
                       {category.name}
                     </option>
                   ))}
@@ -137,8 +158,8 @@ export default function SchedulePage() {
               <div className="inline-flex items-center gap-2 rounded-full bg-main-100/10 px-4 py-2 text-sm font-bold text-main-100">
                 <CalendarDays size={17} strokeWidth={2.5} />
                 {selectedCategory === "All"
-                  ? `${categories.length} Categories`
-                  : selectedCategory}
+                  ? `${categories.length} ${t("Categories")}`
+                  : selectedCategoryLabel}
               </div>
 
               <div className="inline-flex items-center gap-2 rounded-full bg-gray-100 px-4 py-2 text-sm font-bold text-gray-700">
@@ -147,13 +168,14 @@ export default function SchedulePage() {
                   (total, category) => total + category.doctors.length,
                   0,
                 )}{" "}
-                Specialist
-                {filteredCategories.reduce(
-                  (total, category) => total + category.doctors.length,
-                  0,
-                ) > 1
-                  ? "s"
-                  : ""}
+                {t(
+                  filteredCategories.reduce(
+                    (total, category) => total + category.doctors.length,
+                    0,
+                  ) > 1
+                    ? "Specialists"
+                    : "Specialist",
+                )}
               </div>
             </div>
           </div>
@@ -162,8 +184,6 @@ export default function SchedulePage() {
 
       <section className="relative overflow-hidden bg-white pb-16 sm:pb-20 lg:pb-24">
         <div className="absolute inset-0 bg-linear-to-br from-white via-gray-50 to-main-100/5" />
-        <div className="absolute -right-32 top-20 h-80 w-80 rounded-full bg-main-100/10 blur-3xl" />
-        <div className="absolute -left-32 bottom-20 h-80 w-80 rounded-full bg-main-100/10 blur-3xl" />
 
         <div className="relative mx-auto max-w-7xl px-5">
           <div className="space-y-10">
@@ -176,8 +196,6 @@ export default function SchedulePage() {
                   className="overflow-hidden rounded-4xl border border-gray-100 bg-white shadow-xl shadow-gray-200/60"
                 >
                   <div className="relative border-b border-gray-100 bg-gray-50 p-6 sm:p-8">
-                    <div className="absolute -right-16 -top-16 h-44 w-44 rounded-full bg-main-100/10 blur-3xl" />
-
                     <div className="relative flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
                       <div className="flex items-start gap-4">
                         <div className="flex h-15 w-15 shrink-0 items-center justify-center rounded-2xl bg-main-100 text-white shadow-lg shadow-main-100/20">
@@ -186,7 +204,7 @@ export default function SchedulePage() {
 
                         <div>
                           <p className="text-xs font-bold uppercase tracking-[0.18em] text-main-100">
-                            Medical Category
+                            {t("Medical Category")}
                           </p>
 
                           <h2 className="mt-2 text-3xl font-extrabold tracking-tight text-gray-950 sm:text-4xl">
@@ -201,8 +219,12 @@ export default function SchedulePage() {
 
                       <div className="inline-flex w-fit items-center gap-2 rounded-full bg-main-100/10 px-4 py-2 text-sm font-bold text-main-100">
                         <CalendarDays size={17} strokeWidth={2.5} />
-                        {category.doctors.length} Specialist
-                        {category.doctors.length > 1 ? "s" : ""}
+                        {category.doctors.length}{" "}
+                        {t(
+                          category.doctors.length > 1
+                            ? "Specialists"
+                            : "Specialist",
+                        )}
                       </div>
                     </div>
                   </div>
@@ -231,7 +253,7 @@ export default function SchedulePage() {
                             <div>
                               <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-main-100 shadow-sm ring-1 ring-gray-100">
                                 <HeartPulse size={14} strokeWidth={2.5} />
-                                Specialist
+                                {t("Specialist")}
                               </div>
 
                               <h3 className="text-2xl font-extrabold tracking-tight text-gray-950">
@@ -275,19 +297,15 @@ export default function SchedulePage() {
 
       <section className="relative overflow-hidden bg-gray-50 py-16 sm:py-20 lg:py-24">
         <div className="absolute inset-0 bg-linear-to-br from-white via-gray-50 to-main-100/5" />
-        <div className="absolute -right-32 top-10 h-80 w-80 rounded-full bg-main-100/10 blur-3xl" />
 
         <div className="relative mx-auto max-w-7xl px-5">
           <div className="overflow-hidden rounded-4xl bg-gray-950 shadow-2xl shadow-gray-300/60">
             <div className="relative p-8 sm:p-10 lg:p-12">
-              <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-main-100/25 blur-3xl" />
-              <div className="absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
-
               <div className="relative z-10 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
                 <div>
                   <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-white backdrop-blur">
                     <Phone size={15} strokeWidth={2.5} />
-                    Appointment Confirmation
+                    {t("Appointment Confirmation")}
                   </div>
 
                   <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
@@ -298,7 +316,10 @@ export default function SchedulePage() {
                     {cta.description}
                   </p>
 
-                  <p className="mt-5 text-2xl font-extrabold text-white">
+                  <p
+                    dir="ltr"
+                    className="phone-number mt-5 text-2xl font-extrabold text-white"
+                  >
                     {cta.phone}
                   </p>
                 </div>

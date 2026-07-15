@@ -69,6 +69,12 @@ const pages = [
     description: "Contact page details and form labels.",
     file: "contactPage.json",
   },
+  {
+    key: "footer",
+    label: "Footer",
+    description: "Footer contact details, links, and labels.",
+    file: "footer.json",
+  },
 ];
 
 type PublicImage = {

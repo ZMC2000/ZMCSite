@@ -1,16 +1,8 @@
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
-import path from "path";
-import { writeFile } from "fs/promises";
+import { saveEnglishAndSyncArabic } from "@/app/lib/sync-arabic-data";
 
 export const runtime = "nodejs";
-
-const servicesJsonPath = path.join(
-  process.cwd(),
-  "app",
-  "data",
-  "servicesPage.json",
-);
 
 async function isAdmin() {
   const session = await auth();
@@ -28,7 +20,7 @@ export async function PUT(request: Request) {
 
     const body = await request.json();
 
-    await writeFile(servicesJsonPath, JSON.stringify(body, null, 2), "utf-8");
+    await saveEnglishAndSyncArabic("servicesPage.json", body);
 
     return NextResponse.json({
       message: "Services page updated successfully.",

@@ -6,6 +6,7 @@ import {
   FileText,
   Home,
   LayoutDashboard,
+  Languages,
   LogOut,
   Mail,
   Menu,
@@ -15,6 +16,12 @@ import {
 
 
 const adminCards = [
+  {
+    title: "Arabic Content",
+    description: "Edit categorized Arabic JSON content for every website page.",
+    href: "/admin/arabic",
+    icon: Languages,
+  },
   {
     title: "Home",
     description: "Edit homepage sections and content.",

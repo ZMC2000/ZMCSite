@@ -7,12 +7,62 @@ import { useState } from "react";
 import { CalendarDays, Clock, MapPin, Menu, Phone, X } from "lucide-react";
 
 import navbarData from "../data/navbar.json";
+import arabicNavbarData from "../data/ar/navbar.json";
+import { useLanguage, useLocalizedData } from "../i18n/language-context";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const { language, setLanguage } = useLanguage();
 
-  const { logo, emergency, location, hours, links, appointment } = navbarData;
+  const { logo, emergency, location, hours, links, appointment } =
+    useLocalizedData(navbarData, arabicNavbarData);
+
+  const languageSwitcher = (mobile = false) => (
+    <div
+      className={`flex items-center rounded-full border font-bold shadow-sm ${
+        mobile
+          ? "border-gray-200 bg-gray-50 px-3 py-2 text-xs text-gray-700"
+          : "ms-4 border-white/30 bg-white/10 px-3 py-2 text-xs text-white"
+      }`}
+      aria-label="Language selector"
+      dir="ltr"
+    >
+      <button
+        type="button"
+        onClick={() => setLanguage("en")}
+        className={`rounded-full px-1.5 py-0.5 transition ${
+          language === "en"
+            ? mobile
+              ? "bg-main-100 text-white"
+              : "bg-white text-main-100"
+            : "opacity-70 hover:opacity-100"
+        }`}
+        aria-pressed={language === "en"}
+        aria-label="Switch to English"
+      >
+        EN
+      </button>
+      <span className="mx-1 opacity-50" aria-hidden="true">
+        |
+      </span>
+      <button
+        type="button"
+        onClick={() => setLanguage("ar")}
+        className={`rounded-full px-1.5 py-0.5 text-sm transition ${
+          language === "ar"
+            ? mobile
+              ? "bg-main-100 text-white"
+              : "bg-white text-main-100"
+            : "opacity-70 hover:opacity-100"
+        }`}
+        aria-pressed={language === "ar"}
+        aria-label="التبديل إلى العربية"
+      >
+        ع
+      </button>
+    </div>
+  );
 
   return (
     <>
@@ -39,7 +89,10 @@ export default function Navbar() {
                   {emergency.label}
                 </p>
 
-                <p className="mt-0.5 text-sm font-bold text-main-100">
+                <p
+                  dir="ltr"
+                  className="phone-number mt-0.5 text-sm font-bold text-main-100"
+                >
                   {emergency.phone}
                 </p>
               </div>
@@ -107,6 +160,8 @@ export default function Navbar() {
             </Link> */}
           </div>
 
+          <div className="hidden lg:block">{languageSwitcher()}</div>
+
           {/* Mobile Logo */}
           <Link href="/" className="flex items-center py-2 lg:hidden">
             <Image
@@ -119,19 +174,22 @@ export default function Navbar() {
             />
           </Link>
 
-          {/* Mobile Hamburger Only */}
-          <button
-            type="button"
-            onClick={() => setIsOpen(!isOpen)}
-            className="flex h-12 w-12 items-center justify-center text-main-100 lg:hidden"
-            aria-label="Toggle menu"
-          >
-            {isOpen ? (
-              <X size={30} strokeWidth={2.5} />
-            ) : (
-              <Menu size={30} strokeWidth={2.5} />
-            )}
-          </button>
+          <div className="flex items-center gap-2 lg:hidden">
+            {languageSwitcher(true)}
+
+            <button
+              type="button"
+              onClick={() => setIsOpen(!isOpen)}
+              className="flex h-12 w-12 items-center justify-center text-main-100"
+              aria-label={isOpen ? "Close menu" : "Open menu"}
+            >
+              {isOpen ? (
+                <X size={30} strokeWidth={2.5} />
+              ) : (
+                <Menu size={30} strokeWidth={2.5} />
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Dropdown */}
@@ -184,7 +242,9 @@ export default function Navbar() {
 
                 <div className="flex items-center gap-3">
                   <Phone size={18} className="text-main-100" />
-                  <span>{emergency.phone}</span>
+                  <span dir="ltr" className="phone-number">
+                    {emergency.phone}
+                  </span>
                 </div>
               </div>
             </div>

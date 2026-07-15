@@ -1,26 +1,26 @@
+"use client";
+
 import { ArrowRight, HeartPulse, Quote } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 import aboutIntroData from "../data/aboutIntro.json";
+import arabicAboutIntroData from "../data/ar/aboutIntro.json";
+import { useLanguage, useLocalizedData } from "../i18n/language-context";
 
 export default function AboutIntro() {
+  const { t, isArabic } = useLanguage();
   const { eyebrow, title, paragraphs, image, signature, button } =
-    aboutIntroData;
+    useLocalizedData(aboutIntroData, arabicAboutIntroData);
 
   return (
     <section className="relative overflow-hidden bg-white py-16 sm:py-20 lg:py-24">
       {/* Soft Background */}
       <div className="absolute inset-0 bg-linear-to-br from-white via-gray-50 to-main-100/5" />
-      <div className="absolute -right-32 top-20 h-80 w-80 rounded-full bg-main-100/10 blur-3xl" />
-      <div className="absolute -left-32 bottom-20 h-80 w-80 rounded-full bg-main-100/10 blur-3xl" />
 
       <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
         {/* Image Side */}
         <div className="relative">
-          <div className="absolute -left-4 -top-4 hidden h-24 w-24 rounded-3xl bg-main-100/10 sm:block" />
-          <div className="absolute -bottom-4 -right-4 hidden h-28 w-28 rounded-3xl bg-main-100/15 sm:block" />
-
           <div className="relative overflow-hidden rounded-4xl bg-gray-100 shadow-2xl shadow-gray-200/70">
             <Image
               src={image.src}
@@ -41,10 +41,10 @@ export default function AboutIntro() {
 
                 <div>
                   <p className="text-sm font-bold text-gray-900">
-                    Compassionate Care
+                    {t("Compassionate Care")}
                   </p>
                   <p className="text-xs font-medium text-gray-500">
-                    Serving families since 1954
+                    {t("Serving families since 1954")}
                   </p>
                 </div>
               </div>
@@ -97,7 +97,11 @@ export default function AboutIntro() {
                 className="inline-flex items-center justify-center gap-2 rounded-full border border-main-100 px-6 py-3 text-sm font-bold uppercase tracking-wide text-main-100 transition hover:bg-main-100 hover:text-white"
               >
                 {button.text}
-                <ArrowRight size={17} strokeWidth={2.5} />
+                <ArrowRight
+                  size={17}
+                  strokeWidth={2.5}
+                  className={isArabic ? "rtl-flip" : ""}
+                />
               </Link>
             </div>
           </div>

@@ -14,6 +14,14 @@ import {
   Trash2,
   X,
 } from "lucide-react";
+import DraggableAdminItem from "../components/draggable-admin-item";
+import {
+  defaultPersonImage,
+  moveItem,
+  randomDigits,
+  randomLabel,
+  randomPhone,
+} from "../utils/admin-placeholders";
 
 type JsonValue =
   | string
@@ -87,6 +95,41 @@ function isLongTextKey(key: string) {
   );
 }
 
+function isTranslationField(key: string, value: JsonValue) {
+  if (typeof value !== "string") return false;
+
+  const normalizedKey = key.toLowerCase();
+  if (normalizedKey === "en") return false;
+  if (normalizedKey === "ar") return true;
+
+  if (
+    [
+      "id",
+      "src",
+      "image",
+      "icon",
+      "href",
+      "url",
+      "email",
+      "phone",
+      "extension",
+      "target",
+      "folder",
+    ].includes(normalizedKey) ||
+    normalizedKey.endsWith("href") ||
+    normalizedKey.endsWith("src") ||
+    normalizedKey.endsWith("url")
+  ) {
+    return false;
+  }
+
+  return !(
+    /^(?:https?:\/\/|\/|#|tel:|mailto:)/i.test(value) ||
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ||
+    /^\+?[\d\s()/.+-]+$/.test(value)
+  );
+}
+
 function getValueAtPath(data: JsonValue, path: (string | number)[]) {
   let current: JsonValue = data;
 
@@ -109,6 +152,137 @@ function getValueAtPath(data: JsonValue, path: (string | number)[]) {
 
 function cloneJson<T extends JsonValue>(value: T): T {
   return JSON.parse(JSON.stringify(value));
+}
+
+function createFreshValue(
+  template: JsonValue,
+  key: string,
+  path: (string | number)[],
+): JsonValue {
+  const normalizedKey = key.toLowerCase();
+  const pathText = path.map(String).join(".").toLowerCase();
+  const isPerson = pathText.includes("staff") || pathText.includes("doctor");
+
+  if (Array.isArray(template)) {
+    return template.length > 0
+      ? [createFreshValue(template[0], key, [...path, 0])]
+      : [];
+  }
+
+  if (isObject(template)) {
+    return Object.fromEntries(
+      Object.entries(template).map(([childKey, childValue]) => [
+        childKey,
+        createFreshValue(childValue, childKey, [...path, childKey]),
+      ]),
+    );
+  }
+
+  if (typeof template === "number") return Number(randomDigits(3));
+  if (typeof template === "boolean") return false;
+  if (template === null) return null;
+
+  if (normalizedKey === "image" || normalizedKey === "src") {
+    return isPerson ? defaultPersonImage : "";
+  }
+
+  if (normalizedKey.includes("phone")) return randomPhone();
+  if (normalizedKey === "extension") return randomDigits(4);
+  if (normalizedKey.includes("email")) {
+    return `new-${randomDigits(5)}@example.com`;
+  }
+  if (normalizedKey === "href" || normalizedKey.endsWith("href")) return "#";
+  if (normalizedKey === "icon") return template;
+  if (normalizedKey === "alt") return randomLabel("New image");
+  if (normalizedKey === "name" && isPerson) return randomLabel("New member");
+
+  return randomLabel(`New ${formatKey(key).toLowerCase()}`);
+}
+
+function createEmptyArrayItem(path: (string | number)[]): JsonValue {
+  const key = String(path[path.length - 1] ?? "item").toLowerCase();
+
+  if (key === "services") {
+    return {
+      name: randomLabel("New service"),
+      description: randomLabel("Service description"),
+      icon: "stethoscope",
+      image: "",
+      href: "#",
+    };
+  }
+
+  if (key === "links") {
+    return { name: randomLabel("New link"), href: "#" };
+  }
+
+  if (key === "socials") {
+    return {
+      name: randomLabel("New social link"),
+      href: "#",
+      icon: "facebook",
+    };
+  }
+
+  if (key === "floors") {
+    return {
+      title: randomLabel("New floor"),
+      description: randomLabel("Floor description"),
+      mainImage: { src: "", alt: randomLabel("Floor image") },
+      gallery: [],
+    };
+  }
+
+  if (key === "gallery" || key === "images") {
+    return { src: "", alt: randomLabel("New image") };
+  }
+
+  if (key === "categories") {
+    return {
+      name: randomLabel("New category"),
+      icon: "stethoscope",
+      description: randomLabel("Category description"),
+      doctors: [],
+    };
+  }
+
+  if (key === "doctors") {
+    return {
+      name: randomLabel("New doctor"),
+      image: defaultPersonImage,
+      times: [randomLabel("New time")],
+      note: randomLabel("Note"),
+    };
+  }
+
+  if (key === "staff") {
+    return {
+      name: randomLabel("New staff member"),
+      role: randomLabel("Role"),
+      category: randomLabel("Category"),
+      image: defaultPersonImage,
+    };
+  }
+
+  if (key === "contactcards") {
+    const phone = randomPhone();
+    return {
+      title: randomLabel("New contact"),
+      value: phone,
+      description: randomLabel("Contact description"),
+      href: `tel:${phone.replaceAll(" ", "")}`,
+      icon: "phone",
+    };
+  }
+
+  if (key === "extensions") {
+    return {
+      label: randomLabel("New extension"),
+      extension: randomDigits(4),
+    };
+  }
+
+  return randomLabel(key === "times" ? "New time" : "New item");
 }
 
 function setValueAtPath(
@@ -176,19 +350,26 @@ function addArrayItemAtPath(data: JsonValue, path: (string | number)[]) {
 
   const lastItem = arrayValue[arrayValue.length - 1];
 
-  let newItem: JsonValue = "";
-
-  if (isObject(lastItem) || Array.isArray(lastItem)) {
-    newItem = cloneJson(lastItem);
-  } else if (typeof lastItem === "number") {
-    newItem = 0;
-  } else if (typeof lastItem === "boolean") {
-    newItem = false;
-  }
+  const itemKey = String(path[path.length - 1] ?? "item");
+  const newItem =
+    lastItem === undefined
+      ? createEmptyArrayItem(path)
+      : createFreshValue(lastItem, itemKey, path);
 
   const nextArray = [...arrayValue, newItem];
 
   return setValueAtPath(data, path, nextArray);
+}
+
+function moveArrayItemAtPath(
+  data: JsonValue,
+  path: (string | number)[],
+  fromIndex: number,
+  toIndex: number,
+) {
+  const arrayValue = getValueAtPath(data, path);
+  if (!Array.isArray(arrayValue)) return data;
+  return setValueAtPath(data, path, moveItem(arrayValue, fromIndex, toIndex));
 }
 
 export default function AdminUiEditor({
@@ -196,11 +377,13 @@ export default function AdminUiEditor({
   subtitle,
   pages,
   initialImages,
+  translationOnly = false,
 }: {
   title: string;
   subtitle: string;
   pages: EditablePage[];
   initialImages: PublicImage[];
+  translationOnly?: boolean;
 }) {
   const [activeKey, setActiveKey] = useState(pages[0]?.key || "");
   const [pageData, setPageData] = useState<Record<string, JsonValue>>(() => {
@@ -239,6 +422,14 @@ export default function AdminUiEditor({
 
   function addArrayItem(path: (string | number)[]) {
     updateActiveData(addArrayItemAtPath(activeData, path));
+  }
+
+  function moveArrayItem(
+    path: (string | number)[],
+    fromIndex: number,
+    toIndex: number,
+  ) {
+    updateActiveData(moveArrayItemAtPath(activeData, path, fromIndex, toIndex));
   }
 
   function chooseImage(src: string) {
@@ -421,7 +612,9 @@ export default function AdminUiEditor({
                 </div>
 
                 <div className="rounded-full bg-main-100/10 px-3 py-1.5 text-xs font-extrabold text-main-100">
-                  Compact edit mode
+                  {translationOnly
+                    ? "Translation-only mode"
+                    : "Compact edit mode"}
                 </div>
               </div>
 
@@ -434,7 +627,9 @@ export default function AdminUiEditor({
                   onChange={updatePath}
                   onAddArrayItem={addArrayItem}
                   onRemoveArrayItem={removeArrayItem}
+                  onMoveArrayItem={moveArrayItem}
                   onPickImage={(path) => setImagePicker({ path })}
+                  translationOnly={translationOnly}
                 />
               </div>
             </section>
@@ -461,7 +656,9 @@ function JsonEditor({
   onChange,
   onAddArrayItem,
   onRemoveArrayItem,
+  onMoveArrayItem,
   onPickImage,
+  translationOnly,
 }: {
   value: JsonValue;
   path: (string | number)[];
@@ -470,7 +667,13 @@ function JsonEditor({
   onChange: (path: (string | number)[], value: JsonValue) => void;
   onAddArrayItem: (path: (string | number)[]) => void;
   onRemoveArrayItem: (path: (string | number)[], itemIndex: number) => void;
+  onMoveArrayItem: (
+    path: (string | number)[],
+    fromIndex: number,
+    toIndex: number,
+  ) => void;
   onPickImage: (path: (string | number)[]) => void;
+  translationOnly: boolean;
 }) {
   const currentPathKey =
     path.length === 0 ? "root" : makeSafeKey(path.map(String));
@@ -489,14 +692,16 @@ function JsonEditor({
             </p>
           </div>
 
-          <button
-            type="button"
-            onClick={() => onAddArrayItem(path)}
-            className="inline-flex h-9 cursor-pointer items-center gap-2 rounded-full bg-main-100 px-3 text-xs font-bold uppercase tracking-wide text-white"
-          >
-            <Plus size={13} />
-            Add
-          </button>
+          {!translationOnly ? (
+            <button
+              type="button"
+              onClick={() => onAddArrayItem(path)}
+              className="inline-flex h-9 cursor-pointer items-center gap-2 rounded-full bg-main-100 px-3 text-xs font-bold uppercase tracking-wide text-white"
+            >
+              <Plus size={13} />
+              Add
+            </button>
+          ) : null}
         </div>
 
         <div className="space-y-3">
@@ -505,55 +710,67 @@ function JsonEditor({
             const itemPathKey = makeSafeKey(["array", ...itemPath, index]);
 
             return (
-              <details
+              <DraggableAdminItem
                 key={itemPathKey}
-                className="group rounded-2xl border border-gray-100 bg-white"
-                open={value.length <= 3}
+                index={index}
+                disabled={translationOnly}
+                onMove={(fromIndex, toIndex) =>
+                  onMoveArrayItem(path, fromIndex, toIndex)
+                }
               >
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3">
-                  <div className="min-w-0">
-                    <p className="truncate text-sm font-extrabold text-gray-950">
-                      {getArrayItemTitle(item, index)}
-                    </p>
+                <details
+                  className="group rounded-2xl border border-gray-100 bg-white"
+                  open={value.length <= 3}
+                >
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3">
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-extrabold text-gray-950">
+                        {getArrayItemTitle(item, index)}
+                      </p>
 
-                    <p className="mt-1 text-xs font-bold text-gray-400">
-                      Item {index + 1}
-                    </p>
-                  </div>
+                      <p className="mt-1 text-xs font-bold text-gray-400">
+                        Item {index + 1}
+                      </p>
+                    </div>
 
-                  <div className="flex shrink-0 items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={(event) => {
-                        event.preventDefault();
-                        onRemoveArrayItem(path, index);
-                      }}
-                      className="inline-flex h-8 cursor-pointer items-center gap-1 rounded-full bg-red-50 px-3 text-xs font-bold text-red-600"
-                    >
-                      <Trash2 size={13} />
-                      Delete
-                    </button>
+                    <div className="flex shrink-0 items-center gap-2">
+                      {!translationOnly ? (
+                        <button
+                          type="button"
+                          onClick={(event) => {
+                            event.preventDefault();
+                            onRemoveArrayItem(path, index);
+                          }}
+                          className="inline-flex h-8 cursor-pointer items-center gap-1 rounded-full bg-red-50 px-3 text-xs font-bold text-red-600"
+                        >
+                          <Trash2 size={13} />
+                          Delete
+                        </button>
+                      ) : null}
 
-                    <ChevronDown
-                      size={18}
-                      className="text-gray-400 transition group-open:rotate-180"
+                      <ChevronDown
+                        size={18}
+                        className="text-gray-400 transition group-open:rotate-180"
+                      />
+                    </div>
+                  </summary>
+
+                  <div className="border-t border-gray-100 p-3">
+                    <JsonEditor
+                      value={item}
+                      path={itemPath}
+                      itemKey={`${itemKey} ${index + 1}`}
+                      level={level + 1}
+                      onChange={onChange}
+                      onAddArrayItem={onAddArrayItem}
+                      onRemoveArrayItem={onRemoveArrayItem}
+                      onMoveArrayItem={onMoveArrayItem}
+                      onPickImage={onPickImage}
+                      translationOnly={translationOnly}
                     />
                   </div>
-                </summary>
-
-                <div className="border-t border-gray-100 p-3">
-                  <JsonEditor
-                    value={item}
-                    path={itemPath}
-                    itemKey={`${itemKey} ${index + 1}`}
-                    level={level + 1}
-                    onChange={onChange}
-                    onAddArrayItem={onAddArrayItem}
-                    onRemoveArrayItem={onRemoveArrayItem}
-                    onPickImage={onPickImage}
-                  />
-                </div>
-              </details>
+                </details>
+              </DraggableAdminItem>
             );
           })}
         </div>
@@ -596,7 +813,9 @@ function JsonEditor({
                 onChange={onChange}
                 onAddArrayItem={onAddArrayItem}
                 onRemoveArrayItem={onRemoveArrayItem}
+                onMoveArrayItem={onMoveArrayItem}
                 onPickImage={onPickImage}
+                translationOnly={translationOnly}
               />
             </div>
           );
@@ -613,6 +832,7 @@ function JsonEditor({
       path={path}
       onChange={onChange}
       onPickImage={onPickImage}
+      translationOnly={translationOnly}
     />
   );
 }
@@ -624,6 +844,7 @@ function FieldEditor({
   path,
   onChange,
   onPickImage,
+  translationOnly,
 }: {
   label: string;
   value: JsonValue;
@@ -631,9 +852,11 @@ function FieldEditor({
   path: (string | number)[];
   onChange: (path: (string | number)[], value: JsonValue) => void;
   onPickImage: (path: (string | number)[]) => void;
+  translationOnly: boolean;
 }) {
   const stringValue = value === null ? "" : String(value);
   const isImageField = typeof value === "string" && isImageKey(itemKey);
+  const isReadOnly = translationOnly && !isTranslationField(itemKey, value);
 
   if (typeof value === "boolean") {
     return (
@@ -643,6 +866,7 @@ function FieldEditor({
         <input
           type="checkbox"
           checked={value}
+          disabled={translationOnly}
           onChange={(event) => onChange(path, event.target.checked)}
           className="h-4 w-4 cursor-pointer accent-main-100"
         />
@@ -660,6 +884,7 @@ function FieldEditor({
         <input
           type="number"
           value={value}
+          readOnly={translationOnly}
           onChange={(event) => onChange(path, Number(event.target.value))}
           className="h-11 w-full rounded-2xl border border-gray-100 bg-gray-50 px-4 text-sm font-semibold text-gray-950 outline-none transition focus:border-main-100 focus:bg-white focus:ring-4 focus:ring-main-100/10"
         />
@@ -690,18 +915,21 @@ function FieldEditor({
           <div className="min-w-0 flex-1">
             <input
               value={stringValue}
+              readOnly={translationOnly}
               onChange={(event) => onChange(path, event.target.value)}
               className="h-9 w-full rounded-xl border border-gray-100 bg-white px-3 text-xs font-bold text-gray-700 outline-none focus:border-main-100 focus:ring-4 focus:ring-main-100/10"
             />
 
-            <button
-              type="button"
-              onClick={() => onPickImage(path)}
-              className="mt-2 inline-flex h-8 cursor-pointer items-center gap-1 rounded-full bg-main-100 px-3 text-[11px] font-extrabold uppercase tracking-wide text-white"
-            >
-              <ImageIcon size={12} />
-              Choose
-            </button>
+            {!translationOnly ? (
+              <button
+                type="button"
+                onClick={() => onPickImage(path)}
+                className="mt-2 inline-flex h-8 cursor-pointer items-center gap-1 rounded-full bg-main-100 px-3 text-[11px] font-extrabold uppercase tracking-wide text-white"
+              >
+                <ImageIcon size={12} />
+                Choose
+              </button>
+            ) : null}
           </div>
         </div>
       </div>
@@ -716,7 +944,9 @@ function FieldEditor({
         </span>
 
         <textarea
+          dir="auto"
           value={stringValue}
+          readOnly={isReadOnly}
           onChange={(event) => onChange(path, event.target.value)}
           rows={3}
           className="w-full resize-y rounded-2xl border border-gray-100 bg-gray-50 px-4 py-3 text-sm font-semibold leading-6 text-gray-950 outline-none transition focus:border-main-100 focus:bg-white focus:ring-4 focus:ring-main-100/10"
@@ -732,7 +962,9 @@ function FieldEditor({
       </span>
 
       <input
+        dir="auto"
         value={stringValue}
+        readOnly={isReadOnly}
         onChange={(event) => onChange(path, event.target.value)}
         className="h-11 w-full rounded-2xl border border-gray-100 bg-gray-50 px-4 text-sm font-semibold text-gray-950 outline-none transition focus:border-main-100 focus:bg-white focus:ring-4 focus:ring-main-100/10"
       />

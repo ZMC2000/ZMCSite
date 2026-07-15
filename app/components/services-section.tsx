@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -17,6 +19,8 @@ import {
 } from "lucide-react";
 
 import servicesData from "../data/services.json";
+import arabicServicesData from "../data/ar/services.json";
+import { useLanguage, useLocalizedData } from "../i18n/language-context";
 
 const iconMap = {
   stethoscope: Stethoscope,
@@ -34,13 +38,15 @@ const iconMap = {
 };
 
 export default function ServicesSection() {
-  const { eyebrow, title, services } = servicesData;
+  const { t, isArabic } = useLanguage();
+  const { eyebrow, title, services } = useLocalizedData(
+    servicesData,
+    arabicServicesData,
+  );
 
   return (
     <section className="relative overflow-hidden bg-gray-50 py-16 sm:py-20 lg:py-24">
       <div className="absolute inset-0 bg-linear-to-br from-white via-gray-50 to-main-100/5" />
-      <div className="absolute -right-32 top-20 h-80 w-80 rounded-full bg-main-100/10 blur-3xl" />
-      <div className="absolute -left-32 bottom-20 h-80 w-80 rounded-full bg-main-100/10 blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-5">
         <div className="mx-auto max-w-3xl text-center">
@@ -78,8 +84,6 @@ export default function ServicesSection() {
                   <div className="absolute inset-0 rounded-[inherit] bg-main-100/20 mix-blend-multiply" />
                   <div className="absolute inset-0 rounded-[inherit] bg-linear-to-t from-gray-950 via-gray-950/50 to-transparent" />
 
-                  <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-white/10 blur-2xl transition group-hover:bg-main-100/30" />
-
                   <div className="relative z-10 flex h-full min-h-63 flex-col justify-between">
                     <div>
                       <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15 text-white shadow-lg backdrop-blur-md transition group-hover:bg-main-100">
@@ -96,11 +100,13 @@ export default function ServicesSection() {
                     </div>
 
                     <div className="mt-6 flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-white">
-                      Learn More
+                      {t("Learn More")}
                       <ArrowRight
                         size={17}
                         strokeWidth={2.5}
-                        className="transition group-hover:translate-x-1"
+                        className={`transition group-hover:translate-x-1 ${
+                          isArabic ? "rtl-flip" : ""
+                        }`}
                       />
                     </div>
                   </div>

@@ -13,6 +13,8 @@ import {
   Trash2,
   X,
 } from "lucide-react";
+import DraggableAdminItem from "../components/draggable-admin-item";
+import { moveItem, randomLabel } from "../utils/admin-placeholders";
 
 type PublicImage = {
   src: string;
@@ -172,7 +174,10 @@ export default function AboutEditor({
   }
 
   function addParagraph(section: "paragraphsTop" | "paragraphsBottom") {
-    updateHistory(section, [...data.history[section], "New paragraph"]);
+    updateHistory(section, [
+      ...data.history[section],
+      randomLabel("New paragraph"),
+    ]);
   }
 
   function removeParagraph(
@@ -183,6 +188,14 @@ export default function AboutEditor({
       section,
       data.history[section].filter((_, itemIndex) => itemIndex !== index),
     );
+  }
+
+  function moveParagraph(
+    section: "paragraphsTop" | "paragraphsBottom",
+    fromIndex: number,
+    toIndex: number,
+  ) {
+    updateHistory(section, moveItem(data.history[section], fromIndex, toIndex));
   }
 
   function updateHistoryImage(
@@ -205,7 +218,7 @@ export default function AboutEditor({
       ...data.history.images,
       {
         src: "",
-        alt: "History image",
+        alt: randomLabel("History image"),
       },
     ]);
   }
@@ -215,6 +228,10 @@ export default function AboutEditor({
       "images",
       data.history.images.filter((_, itemIndex) => itemIndex !== index),
     );
+  }
+
+  function moveHistoryImage(fromIndex: number, toIndex: number) {
+    updateHistory("images", moveItem(data.history.images, fromIndex, toIndex));
   }
 
   function openImagePicker(target: ImageTarget) {
@@ -462,6 +479,9 @@ export default function AboutEditor({
                   }
                   onAdd={() => addParagraph("paragraphsTop")}
                   onRemove={(index) => removeParagraph("paragraphsTop", index)}
+                  onMove={(fromIndex, toIndex) =>
+                    moveParagraph("paragraphsTop", fromIndex, toIndex)
+                  }
                 />
               </div>
 
@@ -488,57 +508,60 @@ export default function AboutEditor({
 
                 <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                   {data.history.images.map((item, index) => (
-                    <div
+                    <DraggableAdminItem
                       key={`${item.src}-${index}`}
-                      className="rounded-3xl border border-gray-100 bg-white p-4 shadow-sm"
+                      index={index}
+                      onMove={moveHistoryImage}
                     >
-                      <div className="flex h-44 items-center justify-center overflow-hidden rounded-2xl bg-gray-100">
-                        {item.src ? (
-                          <img
-                            src={displayImagePath(item.src)}
-                            alt={item.alt || "History image"}
-                            className="max-h-full max-w-full object-contain"
+                      <div className="rounded-3xl border border-gray-100 bg-white p-4 shadow-sm">
+                        <div className="flex h-44 items-center justify-center overflow-hidden rounded-2xl bg-gray-100">
+                          {item.src ? (
+                            <img
+                              src={displayImagePath(item.src)}
+                              alt={item.alt || "History image"}
+                              className="max-h-full max-w-full object-contain"
+                            />
+                          ) : (
+                            <div className="flex h-full items-center justify-center text-gray-400">
+                              <ImageIcon size={30} />
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="mt-5 space-y-4">
+                          <Input
+                            label="Alt Text"
+                            value={item.alt}
+                            onChange={(value) =>
+                              updateHistoryImage(index, "alt", value)
+                            }
                           />
-                        ) : (
-                          <div className="flex h-full items-center justify-center text-gray-400">
-                            <ImageIcon size={30} />
-                          </div>
-                        )}
+
+                          <button
+                            type="button"
+                            onClick={() =>
+                              openImagePicker({
+                                type: "historyImage",
+                                index,
+                              })
+                            }
+                            className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-main-100 px-4 py-3 text-xs font-bold uppercase tracking-wide text-white"
+                          >
+                            <ImageIcon size={15} />
+                            Choose Image
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => removeHistoryImage(index)}
+                            className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-red-50 px-4 py-3 text-xs font-bold uppercase tracking-wide text-red-600"
+                          >
+                            <Trash2 size={15} />
+                            Remove
+                          </button>
+                        </div>
                       </div>
-
-                      <div className="mt-5 space-y-4">
-                        <Input
-                          label="Alt Text"
-                          value={item.alt}
-                          onChange={(value) =>
-                            updateHistoryImage(index, "alt", value)
-                          }
-                        />
-
-                        <button
-                          type="button"
-                          onClick={() =>
-                            openImagePicker({
-                              type: "historyImage",
-                              index,
-                            })
-                          }
-                          className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-main-100 px-4 py-3 text-xs font-bold uppercase tracking-wide text-white"
-                        >
-                          <ImageIcon size={15} />
-                          Choose Image
-                        </button>
-
-                        <button
-                          type="button"
-                          onClick={() => removeHistoryImage(index)}
-                          className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-red-50 px-4 py-3 text-xs font-bold uppercase tracking-wide text-red-600"
-                        >
-                          <Trash2 size={15} />
-                          Remove
-                        </button>
-                      </div>
-                    </div>
+                    </DraggableAdminItem>
                   ))}
                 </div>
               </div>
@@ -553,6 +576,9 @@ export default function AboutEditor({
                   onAdd={() => addParagraph("paragraphsBottom")}
                   onRemove={(index) =>
                     removeParagraph("paragraphsBottom", index)
+                  }
+                  onMove={(fromIndex, toIndex) =>
+                    moveParagraph("paragraphsBottom", fromIndex, toIndex)
                   }
                 />
               </div>
@@ -691,12 +717,14 @@ function ParagraphEditor({
   onChange,
   onAdd,
   onRemove,
+  onMove,
 }: {
   title: string;
   paragraphs: string[];
   onChange: (index: number, value: string) => void;
   onAdd: () => void;
   onRemove: (index: number) => void;
+  onMove: (fromIndex: number, toIndex: number) => void;
 }) {
   return (
     <div className="rounded-4xl border border-gray-100 bg-gray-50 p-5 sm:p-6">
@@ -720,25 +748,24 @@ function ParagraphEditor({
 
       <div className="space-y-6">
         {paragraphs.map((paragraph, index) => (
-          <div
-            key={index}
-            className="rounded-3xl bg-white p-5 shadow-sm ring-1 ring-gray-100"
-          >
-            <Textarea
-              label={`Paragraph ${index + 1}`}
-              value={paragraph}
-              onChange={(value) => onChange(index, value)}
-            />
+          <DraggableAdminItem key={index} index={index} onMove={onMove}>
+            <div className="rounded-3xl bg-white p-5 shadow-sm ring-1 ring-gray-100">
+              <Textarea
+                label={`Paragraph ${index + 1}`}
+                value={paragraph}
+                onChange={(value) => onChange(index, value)}
+              />
 
-            <button
-              type="button"
-              onClick={() => onRemove(index)}
-              className="mt-4 inline-flex items-center gap-2 rounded-full bg-red-50 px-4 py-2 text-xs font-bold uppercase tracking-wide text-red-600"
-            >
-              <Trash2 size={15} />
-              Remove Paragraph
-            </button>
-          </div>
+              <button
+                type="button"
+                onClick={() => onRemove(index)}
+                className="mt-4 inline-flex items-center gap-2 rounded-full bg-red-50 px-4 py-2 text-xs font-bold uppercase tracking-wide text-red-600"
+              >
+                <Trash2 size={15} />
+                Remove Paragraph
+              </button>
+            </div>
+          </DraggableAdminItem>
         ))}
       </div>
     </div>

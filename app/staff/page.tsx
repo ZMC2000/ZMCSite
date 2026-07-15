@@ -18,6 +18,8 @@ import {
 } from "lucide-react";
 
 import staffPageData from "../data/staffPage.json";
+import arabicStaffPageData from "../data/ar/staffPage.json";
+import { useLanguage, useLocalizedData } from "../i18n/language-context";
 
 const categoryIconMap = {
   Nursing: Stethoscope,
@@ -27,20 +29,36 @@ const categoryIconMap = {
 };
 
 export default function StaffPage() {
-  const { hero, intro, staff, cta } = staffPageData;
+  const { t } = useLanguage();
+  const { hero, intro, staff, cta } = useLocalizedData(
+    staffPageData,
+    arabicStaffPageData,
+  );
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   const categories = useMemo(() => {
     return [
       "All",
-      ...Array.from(new Set(staff.map((member) => member.category))),
+      ...Array.from(
+        new Set(staffPageData.staff.map((member) => member.category)),
+      ),
     ];
-  }, [staff]);
+  }, []);
 
   const filteredStaff =
     selectedCategory === "All"
       ? staff
-      : staff.filter((member) => member.category === selectedCategory);
+      : staff.filter(
+          (_, index) =>
+            staffPageData.staff[index].category === selectedCategory,
+        );
+
+  function getCategoryLabel(category: string) {
+    const memberIndex = staffPageData.staff.findIndex(
+      (member) => member.category === category,
+    );
+    return memberIndex >= 0 ? staff[memberIndex].category : category;
+  }
 
   return (
     <main>
@@ -87,7 +105,7 @@ export default function StaffPage() {
               <div>
                 <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-main-100/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-main-100">
                   <Filter size={15} strokeWidth={2.5} />
-                  Filter Staff
+                  {t("Filter Staff")}
                 </div>
 
                 <h2 className="text-3xl font-extrabold tracking-tight text-gray-950 sm:text-4xl">
@@ -107,7 +125,9 @@ export default function StaffPage() {
                 >
                   {categories.map((category) => (
                     <option key={category} value={category}>
-                      {category === "All" ? "All Staff" : category}
+                      {category === "All"
+                        ? t("All Staff")
+                        : getCategoryLabel(category)}
                     </option>
                   ))}
                 </select>
@@ -123,13 +143,15 @@ export default function StaffPage() {
             <div className="mt-5 flex flex-wrap gap-3">
               <div className="inline-flex items-center gap-2 rounded-full bg-main-100/10 px-4 py-2 text-sm font-bold text-main-100">
                 <UsersRound size={17} strokeWidth={2.5} />
-                {selectedCategory === "All" ? "All Staff" : selectedCategory}
+                {selectedCategory === "All"
+                  ? t("All Staff")
+                  : getCategoryLabel(selectedCategory)}
               </div>
 
               <div className="inline-flex items-center gap-2 rounded-full bg-gray-100 px-4 py-2 text-sm font-bold text-gray-700">
                 <UserRound size={17} strokeWidth={2.5} />
-                {filteredStaff.length} Member
-                {filteredStaff.length > 1 ? "s" : ""}
+                {filteredStaff.length}{" "}
+                {t(filteredStaff.length > 1 ? "Members" : "Member")}
               </div>
             </div>
           </div>
@@ -138,16 +160,19 @@ export default function StaffPage() {
 
       <section className="relative overflow-hidden bg-white pb-16 sm:pb-20 lg:pb-24">
         <div className="absolute inset-0 bg-linear-to-br from-white via-gray-50 to-main-100/5" />
-        <div className="absolute -right-32 top-20 h-80 w-80 rounded-full bg-main-100/10 blur-3xl" />
-        <div className="absolute -left-32 bottom-20 h-80 w-80 rounded-full bg-main-100/10 blur-3xl" />
 
         <div className="relative mx-auto max-w-7xl px-5">
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {filteredStaff.map((member) => {
-              const CategoryIcon =
-                categoryIconMap[
-                  member.category as keyof typeof categoryIconMap
-                ] || HeartPulse;
+              const originalMember = staffPageData.staff.find(
+                (entry) => entry.image === member.image,
+              );
+              const categoryKey = originalMember?.category as
+                | keyof typeof categoryIconMap
+                | undefined;
+              const CategoryIcon = categoryKey
+                ? categoryIconMap[categoryKey]
+                : HeartPulse;
 
               return (
                 <article
@@ -190,19 +215,15 @@ export default function StaffPage() {
 
       <section className="relative overflow-hidden bg-gray-50 py-16 sm:py-20 lg:py-24">
         <div className="absolute inset-0 bg-linear-to-br from-white via-gray-50 to-main-100/5" />
-        <div className="absolute -right-32 top-10 h-80 w-80 rounded-full bg-main-100/10 blur-3xl" />
 
         <div className="relative mx-auto max-w-7xl px-5">
           <div className="overflow-hidden rounded-4xl bg-gray-950 shadow-2xl shadow-gray-300/60">
             <div className="relative p-8 sm:p-10 lg:p-12">
-              <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-main-100/25 blur-3xl" />
-              <div className="absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
-
               <div className="relative z-10 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
                 <div>
                   <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-white backdrop-blur">
                     <Phone size={15} strokeWidth={2.5} />
-                    Staff Assistance
+                    {t("Staff Assistance")}
                   </div>
 
                   <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
@@ -213,7 +234,10 @@ export default function StaffPage() {
                     {cta.description}
                   </p>
 
-                  <p className="mt-5 text-2xl font-extrabold text-white">
+                  <p
+                    dir="ltr"
+                    className="phone-number mt-5 text-2xl font-extrabold text-white"
+                  >
                     {cta.phone}
                   </p>
                 </div>

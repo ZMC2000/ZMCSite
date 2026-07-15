@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight, Mail, MapPin, Phone } from "lucide-react";
@@ -10,6 +12,8 @@ import {
 } from "react-icons/fa6";
 
 import footerData from "../data/footer.json";
+import arabicFooterData from "../data/ar/footer.json";
+import { useLanguage, useLocalizedData } from "../i18n/language-context";
 
 const socialIconMap = {
   facebook: FaFacebookF,
@@ -19,6 +23,7 @@ const socialIconMap = {
 };
 
 export default function Footer() {
+  const { t, isArabic } = useLanguage();
   const {
     logo,
     contact,
@@ -28,13 +33,11 @@ export default function Footer() {
     socials,
     copyright,
     designer,
-  } = footerData;
+  } = useLocalizedData(footerData, arabicFooterData);
 
   return (
     <footer className="relative overflow-hidden bg-white">
       <div className="absolute inset-0 bg-linear-to-br from-white via-gray-50 to-main-100/5" />
-      <div className="absolute -right-32 top-20 h-80 w-80 rounded-full bg-main-100/10 blur-3xl" />
-      <div className="absolute -left-32 bottom-20 h-80 w-80 rounded-full bg-main-100/10 blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-5 py-14 sm:py-16">
         <div className="grid gap-12 lg:grid-cols-[1fr_0.65fr_1.35fr] lg:gap-16">
@@ -65,8 +68,9 @@ export default function Footer() {
                 </div>
 
                 <a
+                  dir="ltr"
                   href={`tel:${contact.phone.replaceAll(" ", "")}`}
-                  className="text-sm font-medium transition hover:text-main-100"
+                  className="phone-number text-sm font-medium transition hover:text-main-100"
                 >
                   {contact.phone}
                 </a>
@@ -119,7 +123,11 @@ export default function Footer() {
                   className="group flex items-center gap-3 text-sm font-semibold text-gray-700 transition hover:text-main-100"
                 >
                   <span className="flex h-7 w-7 items-center justify-center rounded-full bg-main-100/10 text-main-100 transition group-hover:bg-main-100 group-hover:text-white">
-                    <ChevronRight size={16} strokeWidth={2.6} />
+                    <ChevronRight
+                      size={16}
+                      strokeWidth={2.6}
+                      className={isArabic ? "rtl-flip" : ""}
+                    />
                   </span>
 
                   {link.name}
@@ -156,7 +164,7 @@ export default function Footer() {
             >
               {copyright}
             </Link>
-            , All Rights Reserved.
+            {t(", All Rights Reserved.")}
           </p>
 
           <p>

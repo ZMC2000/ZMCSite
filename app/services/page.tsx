@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -11,9 +13,15 @@ import {
 } from "lucide-react";
 
 import servicesPageData from "../data/servicesPage.json";
+import arabicServicesPageData from "../data/ar/servicesPage.json";
+import { useLanguage, useLocalizedData } from "../i18n/language-context";
 
 export default function ServicesPage() {
-  const { hero, floors } = servicesPageData;
+  const { t, isArabic } = useLanguage();
+  const { hero, floors } = useLocalizedData(
+    servicesPageData,
+    arabicServicesPageData,
+  );
 
   return (
     <main>
@@ -36,7 +44,7 @@ export default function ServicesPage() {
           <div className="max-w-3xl">
             <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-white backdrop-blur">
               <HeartPulse size={15} strokeWidth={2.5} />
-              Our Departments
+              {t("Our Departments")}
             </div>
 
             <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
@@ -55,24 +63,22 @@ export default function ServicesPage() {
       {/* Services Overview */}
       <section className="relative overflow-hidden bg-white py-16 sm:py-20 lg:py-24">
         <div className="absolute inset-0 bg-linear-to-br from-white via-gray-50 to-main-100/5" />
-        <div className="absolute -right-32 top-20 h-80 w-80 rounded-full bg-main-100/10 blur-3xl" />
-        <div className="absolute -left-32 bottom-20 h-80 w-80 rounded-full bg-main-100/10 blur-3xl" />
 
         <div className="relative mx-auto max-w-7xl px-5">
           <div className="mx-auto max-w-3xl text-center">
             <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-main-100/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-main-100">
               <Building2 size={15} strokeWidth={2.5} />
-              Clinics and Services
+              {t("Clinics and Services")}
             </div>
 
             <h2 className="text-4xl font-extrabold tracking-tight text-gray-950 sm:text-5xl">
-              Care Across Every Floor
+              {t("Care Across Every Floor")}
             </h2>
 
             <p className="mt-5 text-base font-medium leading-8 text-gray-600 sm:text-lg">
-              Discover how Zarif Medical Center organizes clinical care,
-              diagnostics, prevention, and supportive services across dedicated
-              floors.
+              {t(
+                "Discover how Zarif Medical Center organizes clinical care, diagnostics, prevention, and supportive services across dedicated floors.",
+              )}
             </p>
           </div>
 
@@ -83,12 +89,13 @@ export default function ServicesPage() {
               </div>
 
               <h3 className="mt-5 text-xl font-bold text-gray-950">
-                Specialized Clinics
+                {t("Specialized Clinics")}
               </h3>
 
               <p className="mt-3 text-sm font-medium leading-6 text-gray-600">
-                Multiple medical specialties covering daily consultations and
-                focused care.
+                {t(
+                  "Multiple medical specialties covering daily consultations and focused care.",
+                )}
               </p>
             </div>
 
@@ -98,12 +105,13 @@ export default function ServicesPage() {
               </div>
 
               <h3 className="mt-5 text-xl font-bold text-gray-950">
-                Diagnostics
+                {t("Diagnostics")}
               </h3>
 
               <p className="mt-3 text-sm font-medium leading-6 text-gray-600">
-                Laboratory and imaging services supporting accurate treatment
-                decisions.
+                {t(
+                  "Laboratory and imaging services supporting accurate treatment decisions.",
+                )}
               </p>
             </div>
 
@@ -113,12 +121,13 @@ export default function ServicesPage() {
               </div>
 
               <h3 className="mt-5 text-xl font-bold text-gray-950">
-                Organized Floors
+                {t("Organized Floors")}
               </h3>
 
               <p className="mt-3 text-sm font-medium leading-6 text-gray-600">
-                Services grouped by floor to help patients access care more
-                easily.
+                {t(
+                  "Services grouped by floor to help patients access care more easily.",
+                )}
               </p>
             </div>
           </div>
@@ -157,7 +166,7 @@ export default function ServicesPage() {
 
                     <div className="absolute bottom-5 left-5 rounded-2xl bg-white/90 px-4 py-3 shadow-lg backdrop-blur-md">
                       <p className="text-xs font-bold uppercase tracking-[0.18em] text-main-100">
-                        Floor
+                        {t("Floor")}
                       </p>
                       <p className="mt-1 text-sm font-bold text-gray-950">
                         {floor.title}
@@ -169,7 +178,7 @@ export default function ServicesPage() {
                   <div>
                     <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-main-100/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-main-100">
                       <Layers3 size={15} strokeWidth={2.5} />
-                      Clinic Floor
+                      {t("Clinic Floor")}
                     </div>
 
                     <h2 className="text-3xl font-extrabold tracking-tight text-gray-950 sm:text-4xl">
@@ -185,12 +194,12 @@ export default function ServicesPage() {
                     <div className="mt-7 flex flex-wrap gap-3">
                       <div className="flex items-center gap-2 rounded-full bg-main-100/10 px-4 py-2 text-sm font-bold text-main-100">
                         <CheckCircle2 size={17} strokeWidth={2.5} />
-                        Patient Care
+                        {t("Patient Care")}
                       </div>
 
                       <div className="flex items-center gap-2 rounded-full bg-main-100/10 px-4 py-2 text-sm font-bold text-main-100">
                         <CheckCircle2 size={17} strokeWidth={2.5} />
-                        Specialized Services
+                        {t("Specialized Services")}
                       </div>
                     </div>
                   </div>
@@ -227,12 +236,13 @@ export default function ServicesPage() {
           <div className="mt-16 rounded-4xl bg-main-100 p-7 text-white shadow-2xl shadow-main-100/20 sm:p-10 lg:flex lg:items-center lg:justify-between">
             <div>
               <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
-                Need help choosing the right service?
+                {t("Need help choosing the right service?")}
               </h2>
 
               <p className="mt-4 max-w-2xl text-base font-medium leading-8 text-white/85">
-                Contact Zarif Medical Center and our team will guide you to the
-                right department or appointment.
+                {t(
+                  "Contact Zarif Medical Center and our team will guide you to the right department or appointment.",
+                )}
               </p>
             </div>
 
@@ -240,8 +250,12 @@ export default function ServicesPage() {
               href="/contact"
               className="mt-7 inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-main-100 transition hover:bg-white/90 lg:mt-0"
             >
-              Contact Us
-              <ArrowRight size={17} strokeWidth={2.5} />
+              {t("Contact Us")}
+              <ArrowRight
+                size={17}
+                strokeWidth={2.5}
+                className={isArabic ? "rtl-flip" : ""}
+              />
             </Link>
           </div>
         </div>

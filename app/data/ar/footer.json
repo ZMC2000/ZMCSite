@@ -1,0 +1,64 @@
+{
+  "logo": {
+    "src": "/logo/zmclogo.png",
+    "alt": "مركز الظريف الطبي",
+    "width": 240,
+    "height": 80
+  },
+  "contact": {
+    "address": "الظريف، الملا",
+    "phone": "+961 01 736088",
+    "email": "zarifmedicalcenter@live.com"
+  },
+  "linksTitle": "روابط سريعة",
+  "links": [
+    {
+      "name": "من نحن",
+      "href": "/about"
+    },
+    {
+      "name": "اتصل بنا",
+      "href": "/contact"
+    },
+    {
+      "name": "فريقنا",
+      "href": "/staff"
+    },
+    {
+      "name": "خدماتنا",
+      "href": "/services"
+    }
+  ],
+  "map": {
+    "title": "موقعنا على الخريطة",
+    "src": "https://www.google.com/maps?q=Zarif%20Medical%20Center%20Beirut&output=embed"
+  },
+  "socials": [
+    {
+      "name": "فيسبوك",
+      "href": "#",
+      "icon": "facebook"
+    },
+    {
+      "name": "إنستغرام",
+      "href": "#",
+      "icon": "instagram"
+    },
+    {
+      "name": "يوتيوب",
+      "href": "#",
+      "icon": "youtube"
+    },
+    {
+      "name": "لينكدإن",
+      "href": "#",
+      "icon": "linkedin"
+    }
+  ],
+  "copyright": "مركز الظريف الطبي",
+  "designer": {
+    "label": "تصميم",
+    "name": "ZMC",
+    "href": "#"
+  }
+}

@@ -5,6 +5,7 @@ import {
   FileText,
   Home,
   LayoutDashboard,
+  Languages,
   LogOut,
   Mail,
   Menu,
@@ -25,6 +26,11 @@ const adminLinks = [
     name: "Admin UI",
     href: "/admin/ui",
     icon: User,
+  },
+  {
+    name: "Arabic Content",
+    href: "/admin/arabic",
+    icon: Languages,
   },
   {
     name: "Home UI",

@@ -1,3 +1,5 @@
+"use client";
+
 import {
   ArrowRight,
   Building2,
@@ -10,9 +12,15 @@ import Image from "next/image";
 import Link from "next/link";
 
 import aboutPageData from "../data/aboutPage.json";
+import arabicAboutPageData from "../data/ar/aboutPage.json";
+import { useLanguage, useLocalizedData } from "../i18n/language-context";
 
 export default function AboutPage() {
-  const { hero, intro, history } = aboutPageData;
+  const { t, isArabic } = useLanguage();
+  const { hero, intro, history } = useLocalizedData(
+    aboutPageData,
+    arabicAboutPageData,
+  );
 
   return (
     <main>
@@ -54,8 +62,6 @@ export default function AboutPage() {
       {/* Intro Section */}
       <section className="relative overflow-hidden bg-white py-16 sm:py-20 lg:py-24">
         <div className="absolute inset-0 bg-linear-to-br from-white via-gray-50 to-main-100/5" />
-        <div className="absolute -right-32 top-20 h-80 w-80 rounded-full bg-main-100/10 blur-3xl" />
-        <div className="absolute -left-32 bottom-20 h-80 w-80 rounded-full bg-main-100/10 blur-3xl" />
 
         <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
           {/* Video Card */}
@@ -81,7 +87,7 @@ export default function AboutPage() {
                 {intro.video.title}
               </p>
               <p className="mt-0.5 text-xs font-medium text-gray-500">
-                Watch our story
+                {t("Watch our story")}
               </p>
             </div>
 
@@ -111,15 +117,15 @@ export default function AboutPage() {
 
             <div className="mt-8 flex flex-wrap gap-3">
               <div className="rounded-full bg-main-100/10 px-5 py-3 text-sm font-bold text-main-100">
-                MOPH Approved
+                {t("MOPH Approved")}
               </div>
 
               <div className="rounded-full bg-main-100/10 px-5 py-3 text-sm font-bold text-main-100">
-                Since 1954
+                {t("Since 1954")}
               </div>
 
               <div className="rounded-full bg-main-100/10 px-5 py-3 text-sm font-bold text-main-100">
-                Community Healthcare
+                {t("Community Healthcare")}
               </div>
             </div>
           </div>
@@ -129,8 +135,6 @@ export default function AboutPage() {
       {/* History Section */}
       <section className="relative overflow-hidden bg-gray-50 py-16 sm:py-20 lg:py-24">
         <div className="absolute inset-0 bg-linear-to-br from-white via-gray-50 to-main-100/5" />
-        <div className="absolute -right-32 top-20 h-80 w-80 rounded-full bg-main-100/10 blur-3xl" />
-        <div className="absolute -left-32 bottom-20 h-80 w-80 rounded-full bg-main-100/10 blur-3xl" />
 
         <div className="relative mx-auto max-w-7xl px-5">
           {/* History Intro */}
@@ -156,7 +160,7 @@ export default function AboutPage() {
 
             <div className="rounded-4xl border border-gray-100 bg-white p-7 shadow-xl shadow-gray-200/60">
               <p className="text-sm font-bold uppercase tracking-[0.2em] text-main-100">
-                Established
+                {t("Established")}
               </p>
 
               <p className="mt-3 text-6xl font-extrabold tracking-tight text-gray-950">
@@ -164,24 +168,25 @@ export default function AboutPage() {
               </p>
 
               <p className="mt-4 text-sm font-medium leading-7 text-gray-600">
-                A community healthcare legacy built by Beiruti families to
-                support those in need.
+                {t(
+                  "A community healthcare legacy built by Beiruti families to support those in need.",
+                )}
               </p>
 
               <div className="mt-6 grid grid-cols-2 gap-3">
                 <div className="rounded-2xl bg-main-100/10 p-4">
                   <p className="text-2xl font-extrabold text-main-100">70+</p>
                   <p className="mt-1 text-xs font-bold uppercase tracking-wide text-gray-600">
-                    Years
+                    {t("Years")}
                   </p>
                 </div>
 
                 <div className="rounded-2xl bg-main-100/10 p-4">
                   <p className="text-2xl font-extrabold text-main-100">
-                    Beirut
+                    {t("Beirut")}
                   </p>
                   <p className="mt-1 text-xs font-bold uppercase tracking-wide text-gray-600">
-                    Community
+                    {t("Community")}
                   </p>
                 </div>
               </div>
@@ -218,10 +223,10 @@ export default function AboutPage() {
 
               <div>
                 <h3 className="text-2xl font-bold text-gray-950">
-                  A Legacy of Giving
+                  {t("A Legacy of Giving")}
                 </h3>
                 <p className="mt-1 text-sm font-medium text-gray-500">
-                  Built by generosity, continued through care
+                  {t("Built by generosity, continued through care")}
                 </p>
               </div>
             </div>
@@ -236,8 +241,12 @@ export default function AboutPage() {
               href="/contact"
               className="mt-8 inline-flex items-center gap-2 rounded-full bg-main-100 px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-white shadow-lg shadow-main-100/20 transition hover:bg-main-100/90"
             >
-              Visit the Center
-              <ArrowRight size={17} strokeWidth={2.5} />
+              {t("Visit the Center")}
+              <ArrowRight
+                size={17}
+                strokeWidth={2.5}
+                className={isArabic ? "rtl-flip" : ""}
+              />
             </Link>
           </div>
         </div>

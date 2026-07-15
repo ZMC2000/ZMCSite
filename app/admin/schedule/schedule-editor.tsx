@@ -16,6 +16,12 @@ import {
   UserRound,
   X,
 } from "lucide-react";
+import DraggableAdminItem from "../components/draggable-admin-item";
+import {
+  defaultPersonImage,
+  moveItem,
+  randomLabel,
+} from "../utils/admin-placeholders";
 
 type PublicImage = {
   src: string;
@@ -165,10 +171,11 @@ export default function ScheduleEditor({
   }
 
   function addCategory() {
+    const categoryName = randomLabel("New Category");
     const newCategory: ScheduleCategory = {
-      name: "New Category",
+      name: categoryName,
       icon: "stethoscope",
-      description: "Write category description here.",
+      description: randomLabel("Category description"),
       doctors: [],
     };
 
@@ -177,7 +184,7 @@ export default function ScheduleEditor({
       categories: [...data.categories, newCategory],
     });
 
-    setSelectedCategory("New Category");
+    setSelectedCategory(categoryName);
   }
 
   function removeCategory(categoryIndex: number) {
@@ -191,6 +198,13 @@ export default function ScheduleEditor({
     if (selectedCategory === categoryName) {
       setSelectedCategory("All");
     }
+  }
+
+  function moveCategory(fromIndex: number, toIndex: number) {
+    setData({
+      ...data,
+      categories: moveItem(data.categories, fromIndex, toIndex),
+    });
   }
 
   function updateDoctor(
@@ -226,10 +240,10 @@ export default function ScheduleEditor({
       doctors: [
         ...nextCategories[categoryIndex].doctors,
         {
-          name: "New Doctor",
-          image: "",
-          times: ["New time"],
-          note: "",
+          name: randomLabel("New Doctor"),
+          image: defaultPersonImage,
+          times: [randomLabel("New time")],
+          note: randomLabel("Note"),
         },
       ],
     };
@@ -254,6 +268,23 @@ export default function ScheduleEditor({
       ...data,
       categories: nextCategories,
     });
+  }
+
+  function moveDoctor(
+    categoryIndex: number,
+    fromIndex: number,
+    toIndex: number,
+  ) {
+    const nextCategories = [...data.categories];
+    nextCategories[categoryIndex] = {
+      ...nextCategories[categoryIndex],
+      doctors: moveItem(
+        nextCategories[categoryIndex].doctors,
+        fromIndex,
+        toIndex,
+      ),
+    };
+    setData({ ...data, categories: nextCategories });
   }
 
   function updateDoctorTime(
@@ -290,7 +321,7 @@ export default function ScheduleEditor({
 
     nextDoctors[doctorIndex] = {
       ...nextDoctors[doctorIndex],
-      times: [...nextDoctors[doctorIndex].times, "New time"],
+      times: [...nextDoctors[doctorIndex].times, randomLabel("New time")],
     };
 
     nextCategories[categoryIndex] = {
@@ -328,6 +359,25 @@ export default function ScheduleEditor({
       ...data,
       categories: nextCategories,
     });
+  }
+
+  function moveDoctorTime(
+    categoryIndex: number,
+    doctorIndex: number,
+    fromIndex: number,
+    toIndex: number,
+  ) {
+    const nextCategories = [...data.categories];
+    const nextDoctors = [...nextCategories[categoryIndex].doctors];
+    nextDoctors[doctorIndex] = {
+      ...nextDoctors[doctorIndex],
+      times: moveItem(nextDoctors[doctorIndex].times, fromIndex, toIndex),
+    };
+    nextCategories[categoryIndex] = {
+      ...nextCategories[categoryIndex],
+      doctors: nextDoctors,
+    };
+    setData({ ...data, categories: nextCategories });
   }
 
   function updateCta<K extends keyof SchedulePageData["cta"]>(
@@ -546,239 +596,264 @@ export default function ScheduleEditor({
 
               <div className="space-y-10">
                 {visibleCategories.map(({ category, index: categoryIndex }) => (
-                  <div
+                  <DraggableAdminItem
                     key={`${category.name}-${categoryIndex}`}
-                    className="rounded-4xl border border-gray-100 bg-gray-50 p-5 sm:p-6"
+                    index={categoryIndex}
+                    onMove={moveCategory}
                   >
-                    <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                      <div>
-                        <h3 className="text-xl font-extrabold text-gray-950">
-                          {category.name}
-                        </h3>
-                        <p className="mt-2 text-sm font-medium leading-6 text-gray-500">
-                          {category.doctors.length} doctor
-                          {category.doctors.length === 1 ? "" : "s"} in this
-                          category.
-                        </p>
-                      </div>
-
-                      <button
-                        type="button"
-                        onClick={() => removeCategory(categoryIndex)}
-                        className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-full bg-red-50 px-4 py-2 text-xs font-bold uppercase tracking-wide text-red-600"
-                      >
-                        <Trash2 size={15} />
-                        Remove Category
-                      </button>
-                    </div>
-
-                    <div className="grid gap-6 lg:grid-cols-2">
-                      <Input
-                        label="Category Name"
-                        value={category.name}
-                        onChange={(value) =>
-                          updateCategory(categoryIndex, "name", value)
-                        }
-                      />
-
-                      <Select
-                        label="Category Icon"
-                        value={category.icon}
-                        onChange={(value) =>
-                          updateCategory(categoryIndex, "icon", value)
-                        }
-                        options={iconOptions.map((icon) => ({
-                          label: icon,
-                          value: icon,
-                        }))}
-                      />
-
-                      <div className="lg:col-span-2">
-                        <Textarea
-                          label="Category Description"
-                          value={category.description}
-                          onChange={(value) =>
-                            updateCategory(categoryIndex, "description", value)
-                          }
-                        />
-                      </div>
-                    </div>
-
-                    <div className="mt-10 rounded-4xl border border-gray-100 bg-white p-5 sm:p-6">
-                      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="rounded-4xl border border-gray-100 bg-gray-50 p-5 sm:p-6">
+                      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                         <div>
-                          <h4 className="text-lg font-extrabold text-gray-950">
-                            Doctors
-                          </h4>
+                          <h3 className="text-xl font-extrabold text-gray-950">
+                            {category.name}
+                          </h3>
                           <p className="mt-2 text-sm font-medium leading-6 text-gray-500">
-                            Manage doctors, profile images, notes, and schedule
-                            times.
+                            {category.doctors.length} doctor
+                            {category.doctors.length === 1 ? "" : "s"} in this
+                            category.
                           </p>
                         </div>
 
                         <button
                           type="button"
-                          onClick={() => addDoctor(categoryIndex)}
-                          className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-full bg-main-100 px-4 py-2 text-xs font-bold uppercase tracking-wide text-white"
+                          onClick={() => removeCategory(categoryIndex)}
+                          className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-full bg-red-50 px-4 py-2 text-xs font-bold uppercase tracking-wide text-red-600"
                         >
-                          <Plus size={15} />
-                          Add Doctor
+                          <Trash2 size={15} />
+                          Remove Category
                         </button>
                       </div>
 
-                      <div className="space-y-8">
-                        {category.doctors.map((doctor, doctorIndex) => (
-                          <div
-                            key={`${doctor.name}-${doctorIndex}`}
-                            className="rounded-4xl border border-gray-100 bg-gray-50 p-5"
+                      <div className="grid gap-6 lg:grid-cols-2">
+                        <Input
+                          label="Category Name"
+                          value={category.name}
+                          onChange={(value) =>
+                            updateCategory(categoryIndex, "name", value)
+                          }
+                        />
+
+                        <Select
+                          label="Category Icon"
+                          value={category.icon}
+                          onChange={(value) =>
+                            updateCategory(categoryIndex, "icon", value)
+                          }
+                          options={iconOptions.map((icon) => ({
+                            label: icon,
+                            value: icon,
+                          }))}
+                        />
+
+                        <div className="lg:col-span-2">
+                          <Textarea
+                            label="Category Description"
+                            value={category.description}
+                            onChange={(value) =>
+                              updateCategory(
+                                categoryIndex,
+                                "description",
+                                value,
+                              )
+                            }
+                          />
+                        </div>
+                      </div>
+
+                      <div className="mt-10 rounded-4xl border border-gray-100 bg-white p-5 sm:p-6">
+                        <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                          <div>
+                            <h4 className="text-lg font-extrabold text-gray-950">
+                              Doctors
+                            </h4>
+                            <p className="mt-2 text-sm font-medium leading-6 text-gray-500">
+                              Manage doctors, profile images, notes, and
+                              schedule times.
+                            </p>
+                          </div>
+
+                          <button
+                            type="button"
+                            onClick={() => addDoctor(categoryIndex)}
+                            className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-full bg-main-100 px-4 py-2 text-xs font-bold uppercase tracking-wide text-white"
                           >
-                            <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                              <div className="flex items-center gap-3">
-                                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-main-100 text-white">
-                                  <UserRound size={22} strokeWidth={2.5} />
-                                </div>
+                            <Plus size={15} />
+                            Add Doctor
+                          </button>
+                        </div>
 
-                                <div>
-                                  <h5 className="text-lg font-extrabold text-gray-950">
-                                    {doctor.name}
-                                  </h5>
-                                  <p className="mt-1 text-sm font-medium text-gray-500">
-                                    Doctor {doctorIndex + 1}
-                                  </p>
-                                </div>
-                              </div>
+                        <div className="space-y-8">
+                          {category.doctors.map((doctor, doctorIndex) => (
+                            <DraggableAdminItem
+                              key={`${doctor.name}-${doctorIndex}`}
+                              index={doctorIndex}
+                              onMove={(fromIndex, toIndex) =>
+                                moveDoctor(categoryIndex, fromIndex, toIndex)
+                              }
+                            >
+                              <div className="rounded-4xl border border-gray-100 bg-gray-50 p-5">
+                                <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                                  <div className="flex items-center gap-3">
+                                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-main-100 text-white">
+                                      <UserRound size={22} strokeWidth={2.5} />
+                                    </div>
 
-                              <button
-                                type="button"
-                                onClick={() =>
-                                  removeDoctor(categoryIndex, doctorIndex)
-                                }
-                                className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-full bg-red-50 px-4 py-2 text-xs font-bold uppercase tracking-wide text-red-600"
-                              >
-                                <Trash2 size={15} />
-                                Remove Doctor
-                              </button>
-                            </div>
+                                    <div>
+                                      <h5 className="text-lg font-extrabold text-gray-950">
+                                        {doctor.name}
+                                      </h5>
+                                      <p className="mt-1 text-sm font-medium text-gray-500">
+                                        Doctor {doctorIndex + 1}
+                                      </p>
+                                    </div>
+                                  </div>
 
-                            <div className="grid gap-6 lg:grid-cols-2">
-                              <Input
-                                label="Doctor Name"
-                                value={doctor.name}
-                                onChange={(value) =>
-                                  updateDoctor(
-                                    categoryIndex,
-                                    doctorIndex,
-                                    "name",
-                                    value,
-                                  )
-                                }
-                              />
-
-                              <Input
-                                label="Note"
-                                value={doctor.note}
-                                onChange={(value) =>
-                                  updateDoctor(
-                                    categoryIndex,
-                                    doctorIndex,
-                                    "note",
-                                    value,
-                                  )
-                                }
-                              />
-
-                              <div className="lg:col-span-2">
-                                <ImageSelector
-                                  label="Doctor Image"
-                                  src={doctor.image}
-                                  onChoose={() =>
-                                    openImagePicker({
-                                      type: "doctor",
-                                      categoryIndex,
-                                      doctorIndex,
-                                    })
-                                  }
-                                />
-                              </div>
-                            </div>
-
-                            <div className="mt-8 rounded-3xl border border-gray-100 bg-white p-5">
-                              <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                                <div>
-                                  <h6 className="text-base font-extrabold text-gray-950">
-                                    Schedule Times
-                                  </h6>
-                                  <p className="mt-1 text-sm font-medium text-gray-500">
-                                    Add one or more available time slots.
-                                  </p>
-                                </div>
-
-                                <button
-                                  type="button"
-                                  onClick={() =>
-                                    addDoctorTime(categoryIndex, doctorIndex)
-                                  }
-                                  className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-full bg-main-100 px-4 py-2 text-xs font-bold uppercase tracking-wide text-white"
-                                >
-                                  <Plus size={15} />
-                                  Add Time
-                                </button>
-                              </div>
-
-                              <div className="space-y-4">
-                                {doctor.times.map((time, timeIndex) => (
-                                  <div
-                                    key={`${time}-${timeIndex}`}
-                                    className="grid gap-3 rounded-2xl bg-gray-50 p-4 sm:grid-cols-[1fr_auto] sm:items-end"
+                                  <button
+                                    type="button"
+                                    onClick={() =>
+                                      removeDoctor(categoryIndex, doctorIndex)
+                                    }
+                                    className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-full bg-red-50 px-4 py-2 text-xs font-bold uppercase tracking-wide text-red-600"
                                   >
-                                    <Input
-                                      label={`Time ${timeIndex + 1}`}
-                                      value={time}
-                                      onChange={(value) =>
-                                        updateDoctorTime(
+                                    <Trash2 size={15} />
+                                    Remove Doctor
+                                  </button>
+                                </div>
+
+                                <div className="grid gap-6 lg:grid-cols-2">
+                                  <Input
+                                    label="Doctor Name"
+                                    value={doctor.name}
+                                    onChange={(value) =>
+                                      updateDoctor(
+                                        categoryIndex,
+                                        doctorIndex,
+                                        "name",
+                                        value,
+                                      )
+                                    }
+                                  />
+
+                                  <Input
+                                    label="Note"
+                                    value={doctor.note}
+                                    onChange={(value) =>
+                                      updateDoctor(
+                                        categoryIndex,
+                                        doctorIndex,
+                                        "note",
+                                        value,
+                                      )
+                                    }
+                                  />
+
+                                  <div className="lg:col-span-2">
+                                    <ImageSelector
+                                      label="Doctor Image"
+                                      src={doctor.image}
+                                      onChoose={() =>
+                                        openImagePicker({
+                                          type: "doctor",
                                           categoryIndex,
                                           doctorIndex,
-                                          timeIndex,
-                                          value,
-                                        )
+                                        })
                                       }
                                     />
+                                  </div>
+                                </div>
+
+                                <div className="mt-8 rounded-3xl border border-gray-100 bg-white p-5">
+                                  <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                                    <div>
+                                      <h6 className="text-base font-extrabold text-gray-950">
+                                        Schedule Times
+                                      </h6>
+                                      <p className="mt-1 text-sm font-medium text-gray-500">
+                                        Add one or more available time slots.
+                                      </p>
+                                    </div>
 
                                     <button
                                       type="button"
                                       onClick={() =>
-                                        removeDoctorTime(
+                                        addDoctorTime(
                                           categoryIndex,
                                           doctorIndex,
-                                          timeIndex,
                                         )
                                       }
-                                      className="inline-flex h-12 w-fit cursor-pointer items-center justify-center gap-2 rounded-full bg-red-50 px-4 text-xs font-bold uppercase tracking-wide text-red-600"
+                                      className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-full bg-main-100 px-4 py-2 text-xs font-bold uppercase tracking-wide text-white"
                                     >
-                                      <Trash2 size={15} />
-                                      Remove
+                                      <Plus size={15} />
+                                      Add Time
                                     </button>
                                   </div>
-                                ))}
 
-                                {doctor.times.length === 0 ? (
-                                  <div className="rounded-2xl bg-gray-50 p-5 text-center text-sm font-bold text-gray-500">
-                                    No times added yet.
+                                  <div className="space-y-4">
+                                    {doctor.times.map((time, timeIndex) => (
+                                      <DraggableAdminItem
+                                        key={`${time}-${timeIndex}`}
+                                        index={timeIndex}
+                                        onMove={(fromIndex, toIndex) =>
+                                          moveDoctorTime(
+                                            categoryIndex,
+                                            doctorIndex,
+                                            fromIndex,
+                                            toIndex,
+                                          )
+                                        }
+                                      >
+                                        <div className="grid gap-3 rounded-2xl bg-gray-50 p-4 sm:grid-cols-[1fr_auto] sm:items-end">
+                                          <Input
+                                            label={`Time ${timeIndex + 1}`}
+                                            value={time}
+                                            onChange={(value) =>
+                                              updateDoctorTime(
+                                                categoryIndex,
+                                                doctorIndex,
+                                                timeIndex,
+                                                value,
+                                              )
+                                            }
+                                          />
+
+                                          <button
+                                            type="button"
+                                            onClick={() =>
+                                              removeDoctorTime(
+                                                categoryIndex,
+                                                doctorIndex,
+                                                timeIndex,
+                                              )
+                                            }
+                                            className="inline-flex h-12 w-fit cursor-pointer items-center justify-center gap-2 rounded-full bg-red-50 px-4 text-xs font-bold uppercase tracking-wide text-red-600"
+                                          >
+                                            <Trash2 size={15} />
+                                            Remove
+                                          </button>
+                                        </div>
+                                      </DraggableAdminItem>
+                                    ))}
+
+                                    {doctor.times.length === 0 ? (
+                                      <div className="rounded-2xl bg-gray-50 p-5 text-center text-sm font-bold text-gray-500">
+                                        No times added yet.
+                                      </div>
+                                    ) : null}
                                   </div>
-                                ) : null}
+                                </div>
                               </div>
-                            </div>
-                          </div>
-                        ))}
+                            </DraggableAdminItem>
+                          ))}
 
-                        {category.doctors.length === 0 ? (
-                          <div className="rounded-3xl bg-gray-50 p-8 text-center text-sm font-bold text-gray-500 ring-1 ring-gray-100">
-                            No doctors in this category yet.
-                          </div>
-                        ) : null}
+                          {category.doctors.length === 0 ? (
+                            <div className="rounded-3xl bg-gray-50 p-8 text-center text-sm font-bold text-gray-500 ring-1 ring-gray-100">
+                              No doctors in this category yet.
+                            </div>
+                          ) : null}
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </DraggableAdminItem>
                 ))}
 
                 {visibleCategories.length === 0 ? (

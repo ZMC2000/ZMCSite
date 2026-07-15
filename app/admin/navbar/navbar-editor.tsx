@@ -16,6 +16,12 @@ import {
   Trash2,
   X,
 } from "lucide-react";
+import DraggableAdminItem from "../components/draggable-admin-item";
+import {
+  moveItem,
+  randomDigits,
+  randomLabel,
+} from "../utils/admin-placeholders";
 
 type PublicImage = {
   src: string;
@@ -160,8 +166,8 @@ export default function NavbarEditor({
       links: [
         ...data.links,
         {
-          name: "New Link",
-          href: "/new-page",
+          name: randomLabel("New Link"),
+          href: `/new-page-${randomDigits(5)}`,
         },
       ],
     });
@@ -172,6 +178,10 @@ export default function NavbarEditor({
       ...data,
       links: data.links.filter((_, itemIndex) => itemIndex !== index),
     });
+  }
+
+  function moveLink(fromIndex: number, toIndex: number) {
+    setData({ ...data, links: moveItem(data.links, fromIndex, toIndex) });
   }
 
   function updateAppointment<K extends keyof NavbarData["appointment"]>(
@@ -446,50 +456,53 @@ export default function NavbarEditor({
 
               <div className="space-y-6">
                 {data.links.map((link, index) => (
-                  <div
+                  <DraggableAdminItem
                     key={`${link.name}-${index}`}
-                    className="rounded-4xl border border-gray-100 bg-gray-50 p-5 sm:p-6"
+                    index={index}
+                    onMove={moveLink}
                   >
-                    <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-main-100 text-white">
-                          <Link2 size={20} strokeWidth={2.5} />
+                    <div className="rounded-4xl border border-gray-100 bg-gray-50 p-5 sm:p-6">
+                      <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-main-100 text-white">
+                            <Link2 size={20} strokeWidth={2.5} />
+                          </div>
+
+                          <div>
+                            <h3 className="text-lg font-extrabold text-gray-950">
+                              {link.name}
+                            </h3>
+                            <p className="mt-1 text-sm font-bold text-main-100">
+                              {link.href}
+                            </p>
+                          </div>
                         </div>
 
-                        <div>
-                          <h3 className="text-lg font-extrabold text-gray-950">
-                            {link.name}
-                          </h3>
-                          <p className="mt-1 text-sm font-bold text-main-100">
-                            {link.href}
-                          </p>
-                        </div>
+                        <button
+                          type="button"
+                          onClick={() => removeLink(index)}
+                          className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-full bg-red-50 px-4 py-2 text-xs font-bold uppercase tracking-wide text-red-600"
+                        >
+                          <Trash2 size={15} />
+                          Remove
+                        </button>
                       </div>
 
-                      <button
-                        type="button"
-                        onClick={() => removeLink(index)}
-                        className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-full bg-red-50 px-4 py-2 text-xs font-bold uppercase tracking-wide text-red-600"
-                      >
-                        <Trash2 size={15} />
-                        Remove
-                      </button>
-                    </div>
+                      <div className="grid gap-6 lg:grid-cols-2">
+                        <Input
+                          label="Link Name"
+                          value={link.name}
+                          onChange={(value) => updateLink(index, "name", value)}
+                        />
 
-                    <div className="grid gap-6 lg:grid-cols-2">
-                      <Input
-                        label="Link Name"
-                        value={link.name}
-                        onChange={(value) => updateLink(index, "name", value)}
-                      />
-
-                      <Input
-                        label="Link Href"
-                        value={link.href}
-                        onChange={(value) => updateLink(index, "href", value)}
-                      />
+                        <Input
+                          label="Link Href"
+                          value={link.href}
+                          onChange={(value) => updateLink(index, "href", value)}
+                        />
+                      </div>
                     </div>
-                  </div>
+                  </DraggableAdminItem>
                 ))}
 
                 {data.links.length === 0 ? (

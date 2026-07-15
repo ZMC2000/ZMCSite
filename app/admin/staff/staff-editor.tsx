@@ -15,6 +15,12 @@ import {
   UsersRound,
   X,
 } from "lucide-react";
+import DraggableAdminItem from "../components/draggable-admin-item";
+import {
+  defaultPersonImage,
+  moveItem,
+  randomLabel,
+} from "../utils/admin-placeholders";
 
 type PublicImage = {
   src: string;
@@ -165,10 +171,10 @@ export default function StaffEditor({
 
   function addStaffMember() {
     const nextMember: StaffMember = {
-      name: "New Staff Member",
-      role: "Role",
+      name: randomLabel("New Staff Member"),
+      role: randomLabel("Role"),
       category: selectedCategory === "All" ? "Nursing" : selectedCategory,
-      image: "",
+      image: defaultPersonImage,
     };
 
     setData({
@@ -185,6 +191,13 @@ export default function StaffEditor({
     setData({
       ...data,
       staff: data.staff.filter((_, index) => index !== staffIndex),
+    });
+  }
+
+  function moveStaffMember(fromIndex: number, toIndex: number) {
+    setData({
+      ...data,
+      staff: moveItem(data.staff, fromIndex, toIndex),
     });
   }
 
@@ -425,75 +438,78 @@ export default function StaffEditor({
 
               <div className="grid gap-6 md:grid-cols-2">
                 {visibleStaff.map(({ member, index: staffIndex }) => (
-                  <div
+                  <DraggableAdminItem
                     key={`${member.name}-${staffIndex}`}
-                    className="rounded-4xl border border-gray-100 bg-gray-50 p-5 sm:p-6"
+                    index={staffIndex}
+                    onMove={moveStaffMember}
                   >
-                    <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-main-100 text-white">
-                          <UserRound size={22} strokeWidth={2.5} />
+                    <div className="rounded-4xl border border-gray-100 bg-gray-50 p-5 sm:p-6">
+                      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-main-100 text-white">
+                            <UserRound size={22} strokeWidth={2.5} />
+                          </div>
+
+                          <div>
+                            <h3 className="text-lg font-extrabold text-gray-950">
+                              {member.name}
+                            </h3>
+                            <p className="mt-1 text-sm font-medium text-gray-500">
+                              {member.category}
+                            </p>
+                          </div>
                         </div>
 
-                        <div>
-                          <h3 className="text-lg font-extrabold text-gray-950">
-                            {member.name}
-                          </h3>
-                          <p className="mt-1 text-sm font-medium text-gray-500">
-                            {member.category}
-                          </p>
-                        </div>
+                        <button
+                          type="button"
+                          onClick={() => removeStaffMember(staffIndex)}
+                          className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-full bg-red-50 px-4 py-2 text-xs font-bold uppercase tracking-wide text-red-600"
+                        >
+                          <Trash2 size={15} />
+                          Remove
+                        </button>
                       </div>
 
-                      <button
-                        type="button"
-                        onClick={() => removeStaffMember(staffIndex)}
-                        className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-full bg-red-50 px-4 py-2 text-xs font-bold uppercase tracking-wide text-red-600"
-                      >
-                        <Trash2 size={15} />
-                        Remove
-                      </button>
-                    </div>
-
-                    <div className="grid gap-6 lg:grid-cols-2">
-                      <Input
-                        label="Name"
-                        value={member.name}
-                        onChange={(value) =>
-                          updateStaff(staffIndex, "name", value)
-                        }
-                      />
-
-                      <Input
-                        label="Role"
-                        value={member.role}
-                        onChange={(value) =>
-                          updateStaff(staffIndex, "role", value)
-                        }
-                      />
-
-                      <Input
-                        label="Category"
-                        value={member.category}
-                        onChange={(value) =>
-                          updateStaff(staffIndex, "category", value)
-                        }
-                      />
-
-                      <div className="lg:col-span-2">
-                        <ImageSelector
-                          label="Staff Image"
-                          src={member.image}
-                          onChoose={() =>
-                            openImagePicker({
-                              type: "staff",
-                              staffIndex,
-                            })
+                      <div className="grid gap-6 lg:grid-cols-2">
+                        <Input
+                          label="Name"
+                          value={member.name}
+                          onChange={(value) =>
+                            updateStaff(staffIndex, "name", value)
                           }
                         />
+
+                        <Input
+                          label="Role"
+                          value={member.role}
+                          onChange={(value) =>
+                            updateStaff(staffIndex, "role", value)
+                          }
+                        />
+
+                        <Input
+                          label="Category"
+                          value={member.category}
+                          onChange={(value) =>
+                            updateStaff(staffIndex, "category", value)
+                          }
+                        />
+
+                        <div className="lg:col-span-2">
+                          <ImageSelector
+                            label="Staff Image"
+                            src={member.image}
+                            onChoose={() =>
+                              openImagePicker({
+                                type: "staff",
+                                staffIndex,
+                              })
+                            }
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </DraggableAdminItem>
                 ))}
 
                 {visibleStaff.length === 0 ? (

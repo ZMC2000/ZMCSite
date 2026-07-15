@@ -1,0 +1,91 @@
+{
+  "eyebrow": "ما نقدّمه",
+  "title": "نقدّم مجموعة متنوعة من الاختصاصات الطبية",
+  "subtitle": "تعرّف إلى خدماتنا الصحية الأساسية، من طب الأسرة والتشخيص إلى الرعاية الطبية المتخصصة.",
+  "services": [
+    {
+      "name": "الطب العام",
+      "description": "استشارات أولية وفحوص ومتابعة ودعم صحي يومي.",
+      "icon": "stethoscope",
+      "image": "/services/cat1.png",
+      "href": "/services"
+    },
+    {
+      "name": "الأنف والأذن والحنجرة",
+      "description": "استشارات الأنف والأذن والحنجرة للبالغين والأطفال.",
+      "icon": "ear",
+      "image": "/services/cat2.png",
+      "href": "/services"
+    },
+    {
+      "name": "الأمراض الجلدية",
+      "description": "استشارات للبشرة والشعر والأظافر بإشراف طبي متخصص.",
+      "icon": "hand",
+      "image": "/services/cat4.png",
+      "href": "/services"
+    },
+    {
+      "name": "طب القلب",
+      "description": "استشارات ومراقبة ورعاية لصحة القلب والأوعية الدموية.",
+      "icon": "heartPulse",
+      "image": "/services/cat3.png",
+      "href": "/services"
+    },
+    {
+      "name": "الأمراض النسائية",
+      "description": "خدمات صحة المرأة والرعاية الوقائية والاستشارات المتخصصة.",
+      "icon": "venus",
+      "image": "/services/cat5.png",
+      "href": "/services"
+    },
+    {
+      "name": "جراحة العظام",
+      "description": "رعاية العظام والمفاصل والعضلات والحركة مع متابعة اختصاصية.",
+      "icon": "bone",
+      "image": "/services/cat6.png",
+      "href": "/services"
+    },
+    {
+      "name": "الغدد الصماء",
+      "description": "استشارات الهرمونات والسكري والغدة الدرقية وصحة الأيض.",
+      "icon": "activity",
+      "image": "/services/cat7.png",
+      "href": "/services"
+    },
+    {
+      "name": "المسالك البولية",
+      "description": "استشارات ومتابعة لصحة المسالك البولية والجهاز التناسلي الذكري.",
+      "icon": "mars",
+      "image": "/services/cat8.png",
+      "href": "/services"
+    },
+    {
+      "name": "طب الأطفال",
+      "description": "رعاية طبية لطيفة للأطفال تشمل متابعة النمو واللقاحات.",
+      "icon": "baby",
+      "image": "/services/cat9.png",
+      "href": "/services"
+    },
+    {
+      "name": "طب العيون",
+      "description": "استشارات صحة العين وفحص النظر وإرشاد طبي للعيون.",
+      "icon": "eye",
+      "image": "/services/cat10.png",
+      "href": "/services"
+    },
+    {
+      "name": "العلاج النفسي",
+      "description": "رعاية داعمة للصحة النفسية وإرشاد وخدمات للعافية العاطفية.",
+      "icon": "brain",
+      "image": "/services/cat11.png",
+      "href": "/services"
+    },
+    {
+      "name": "التغذية",
+      "description": "استشارات تغذية وإرشاد غذائي ودعم لنمط حياة صحي.",
+      "icon": "utensils",
+      "image": "/services/cat12.png",
+      "href": "/services"
+    }
+  ]
+}
